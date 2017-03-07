@@ -11,8 +11,8 @@ namespace Noise
         Vector<1> P  = { x };
         Vector<1> Pf = { std::floor( x ) };
         
-        auto c0 = this->getGridVal( P, Pf );
-        auto c1 = this->getGridVal( P, Pf + Vector<1>{1.0} );
+        auto c0 = this->getGridValue( P, Pf );
+        auto c1 = this->getGridValue( P, Pf + Vector<1>{1.0} );
 
         auto u = Quintic( P[0] - Pf[0] );
 
@@ -27,10 +27,10 @@ namespace Noise
         Vector<2> Pf = { std::floor( x ),
                          std::floor( y ) };
 
-        auto c00 = this->getGridVal( P, Pf );
-        auto c01 = this->getGridVal( P, Pf + Vector<2>{0.0, 1.0} );
-        auto c10 = this->getGridVal( P, Pf + Vector<2>{1.0, 0.0} );
-        auto c11 = this->getGridVal( P, Pf + Vector<2>{1.0, 1.0} );
+        auto c00 = this->getGridValue( P, Pf );
+        auto c01 = this->getGridValue( P, Pf + Vector<2>{0.0, 1.0} );
+        auto c10 = this->getGridValue( P, Pf + Vector<2>{1.0, 0.0} );
+        auto c11 = this->getGridValue( P, Pf + Vector<2>{1.0, 1.0} );
 
         auto u = Quintic( P[0] - Pf[0] );
         auto v = Quintic( P[1] - Pf[1] );
@@ -49,14 +49,14 @@ namespace Noise
                          std::floor( y ),
                          std::floor( z ) };
 
-        auto c000 = this->getGridVal( P, Pf );
-        auto c001 = this->getGridVal( P, Pf + Vector<3>{0.0, 0.0, 1.0} );
-        auto c010 = this->getGridVal( P, Pf + Vector<3>{0.0, 1.0, 0.0} );
-        auto c011 = this->getGridVal( P, Pf + Vector<3>{0.0, 1.0, 1.0} );
-        auto c100 = this->getGridVal( P, Pf + Vector<3>{1.0, 0.0, 0.0} );
-        auto c101 = this->getGridVal( P, Pf + Vector<3>{1.0, 0.0, 1.0} );
-        auto c110 = this->getGridVal( P, Pf + Vector<3>{1.0, 1.0, 0.0} );
-        auto c111 = this->getGridVal( P, Pf + Vector<3>{1.0, 1.0, 1.0} );
+        auto c000 = this->getGridValue( P, Pf );
+        auto c001 = this->getGridValue( P, Pf + Vector<3>{0.0, 0.0, 1.0} );
+        auto c010 = this->getGridValue( P, Pf + Vector<3>{0.0, 1.0, 0.0} );
+        auto c011 = this->getGridValue( P, Pf + Vector<3>{0.0, 1.0, 1.0} );
+        auto c100 = this->getGridValue( P, Pf + Vector<3>{1.0, 0.0, 0.0} );
+        auto c101 = this->getGridValue( P, Pf + Vector<3>{1.0, 0.0, 1.0} );
+        auto c110 = this->getGridValue( P, Pf + Vector<3>{1.0, 1.0, 0.0} );
+        auto c111 = this->getGridValue( P, Pf + Vector<3>{1.0, 1.0, 1.0} );
 
         auto u = Quintic( P[0] - Pf[0] );
         auto v = Quintic( P[1] - Pf[1] );
@@ -81,22 +81,22 @@ namespace Noise
                          std::floor( z ),
                          std::floor( a ) };
 
-        auto c0000 = this->getGridVal( P, Pf );
-        auto c0001 = this->getGridVal( P, Pf + Vector<4>{0.0, 0.0, 1.0, 1.0} );
-        auto c0010 = this->getGridVal( P, Pf + Vector<4>{0.0, 0.0, 1.0, 0.0} );
-        auto c0011 = this->getGridVal( P, Pf + Vector<4>{0.0, 0.0, 1.0, 1.0} );
-        auto c0100 = this->getGridVal( P, Pf + Vector<4>{0.0, 1.0, 0.0, 0.0} );
-        auto c0101 = this->getGridVal( P, Pf + Vector<4>{0.0, 1.0, 0.0, 1.0} );
-        auto c0110 = this->getGridVal( P, Pf + Vector<4>{0.0, 1.0, 1.0, 0.0} );
-        auto c0111 = this->getGridVal( P, Pf + Vector<4>{0.0, 1.0, 1.0, 1.0} );
-        auto c1000 = this->getGridVal( P, Pf + Vector<4>{1.0, 0.0, 0.0, 0.0} );
-        auto c1001 = this->getGridVal( P, Pf + Vector<4>{1.0, 0.0, 0.0, 1.0} );
-        auto c1010 = this->getGridVal( P, Pf + Vector<4>{1.0, 0.0, 1.0, 0.0} );
-        auto c1011 = this->getGridVal( P, Pf + Vector<4>{1.0, 0.0, 1.0, 1.0} );
-        auto c1100 = this->getGridVal( P, Pf + Vector<4>{1.0, 1.0, 0.0, 0.0} );
-        auto c1101 = this->getGridVal( P, Pf + Vector<4>{1.0, 1.0, 0.0, 1.0} );
-        auto c1110 = this->getGridVal( P, Pf + Vector<4>{1.0, 1.0, 1.0, 0.0} );
-        auto c1111 = this->getGridVal( P, Pf + Vector<4>{1.0, 1.0, 1.0, 1.0} );
+        auto c0000 = this->getGridValue( P, Pf );
+        auto c0001 = this->getGridValue( P, Pf + Vector<4>{0.0, 0.0, 0.0, 1.0} );
+        auto c0010 = this->getGridValue( P, Pf + Vector<4>{0.0, 0.0, 1.0, 0.0} );
+        auto c0011 = this->getGridValue( P, Pf + Vector<4>{0.0, 0.0, 1.0, 1.0} );
+        auto c0100 = this->getGridValue( P, Pf + Vector<4>{0.0, 1.0, 0.0, 0.0} );
+        auto c0101 = this->getGridValue( P, Pf + Vector<4>{0.0, 1.0, 0.0, 1.0} );
+        auto c0110 = this->getGridValue( P, Pf + Vector<4>{0.0, 1.0, 1.0, 0.0} );
+        auto c0111 = this->getGridValue( P, Pf + Vector<4>{0.0, 1.0, 1.0, 1.0} );
+        auto c1000 = this->getGridValue( P, Pf + Vector<4>{1.0, 0.0, 0.0, 0.0} );
+        auto c1001 = this->getGridValue( P, Pf + Vector<4>{1.0, 0.0, 0.0, 1.0} );
+        auto c1010 = this->getGridValue( P, Pf + Vector<4>{1.0, 0.0, 1.0, 0.0} );
+        auto c1011 = this->getGridValue( P, Pf + Vector<4>{1.0, 0.0, 1.0, 1.0} );
+        auto c1100 = this->getGridValue( P, Pf + Vector<4>{1.0, 1.0, 0.0, 0.0} );
+        auto c1101 = this->getGridValue( P, Pf + Vector<4>{1.0, 1.0, 0.0, 1.0} );
+        auto c1110 = this->getGridValue( P, Pf + Vector<4>{1.0, 1.0, 1.0, 0.0} );
+        auto c1111 = this->getGridValue( P, Pf + Vector<4>{1.0, 1.0, 1.0, 1.0} );
 
         auto u = Quintic( P[0] - Pf[0] );
         auto v = Quintic( P[1] - Pf[1] );
@@ -122,13 +122,12 @@ namespace Noise
         return res;
     }
 
-    real_t Perlin::getGridVal( const Vector<1>& pos,
-                               const Vector<1>& gridpos ) const
+    real_t Perlin::getGridValue( const Vector<1>& pos,
+                                 const Vector<1>& gridpos ) const
     {
-        auto xi = static_cast<uint64_t>( pos[0] );
-
         Vector<1> gradient {
-            NormalizeU64( XORShift128Plus( this->seed, xi ) )
+            NormalizeU64( XORShift128Plus( this->seed,
+                                           static_cast<uint64_t>( gridpos[0] ) ) )
         };
         gradient.normalize();
 
@@ -137,15 +136,14 @@ namespace Noise
         return res;
     }
 
-    real_t Perlin::getGridVal( const Vector<2>& pos,
-                               const Vector<2>& gridpos ) const
+    real_t Perlin::getGridValue( const Vector<2>& pos,
+                                 const Vector<2>& gridpos ) const
     {
-        auto xi = static_cast<uint64_t>( pos[0] );
-        auto yi = static_cast<uint64_t>( pos[1] );
-
         Vector<2> gradient {
-            NormalizeU64( XORShift128Plus( this->seed, xi ) ),
-            NormalizeU64( XORShift128Plus( this->seed, yi ) )
+            NormalizeU64( XORShift128Plus( this->seed,
+                                           static_cast<uint64_t>( gridpos[0] ) ) ),
+            NormalizeU64( XORShift128Plus( this->seed,
+                                           static_cast<uint64_t>( gridpos[1] ) ) )
         };
         gradient.normalize();
 
@@ -154,17 +152,16 @@ namespace Noise
         return res;
     }
 
-    real_t Perlin::getGridVal( const Vector<3>& pos,
-                               const Vector<3>& gridpos ) const
+    real_t Perlin::getGridValue( const Vector<3>& pos,
+                                 const Vector<3>& gridpos ) const
     {
-        auto xi = static_cast<uint64_t>( pos[0] );
-        auto yi = static_cast<uint64_t>( pos[1] );
-        auto zi = static_cast<uint64_t>( pos[2] );
-
         Vector<3> gradient {
-            NormalizeU64( XORShift128Plus( this->seed, xi ) ),
-            NormalizeU64( XORShift128Plus( this->seed, yi ) ),
-            NormalizeU64( XORShift128Plus( this->seed, zi ) )
+            NormalizeU64( XORShift128Plus( this->seed,
+                                           static_cast<uint64_t>( gridpos[0] ) ) ),
+            NormalizeU64( XORShift128Plus( this->seed,
+                                           static_cast<uint64_t>( gridpos[1] ) ) ),
+            NormalizeU64( XORShift128Plus( this->seed,
+                                           static_cast<uint64_t>( gridpos[2] ) ) )
         };
         gradient.normalize();
 
@@ -173,19 +170,18 @@ namespace Noise
         return res;
     }
 
-    real_t Perlin::getGridVal( const Vector<4>& pos,
-                               const Vector<4>& gridpos ) const
+    real_t Perlin::getGridValue( const Vector<4>& pos,
+                                 const Vector<4>& gridpos ) const
     {
-        auto xi = static_cast<uint64_t>( pos[0] );
-        auto yi = static_cast<uint64_t>( pos[1] );
-        auto zi = static_cast<uint64_t>( pos[2] );
-        auto ai = static_cast<uint64_t>( pos[3] );
-
         Vector<4> gradient {
-            NormalizeU64( XORShift128Plus( this->seed, xi ) ),
-            NormalizeU64( XORShift128Plus( this->seed, yi ) ),
-            NormalizeU64( XORShift128Plus( this->seed, zi ) ),
-            NormalizeU64( XORShift128Plus( this->seed, ai ) )
+            NormalizeU64( XORShift128Plus( this->seed,
+                                           static_cast<uint64_t>( pos[0] ) ) ),
+            NormalizeU64( XORShift128Plus( this->seed,
+                                           static_cast<uint64_t>( pos[1] ) ) ),
+            NormalizeU64( XORShift128Plus( this->seed,
+                                           static_cast<uint64_t>( pos[2] ) ) ),
+            NormalizeU64( XORShift128Plus( this->seed,
+                                           static_cast<uint64_t>( pos[3] ) ) )
         };
         gradient.normalize();
 
