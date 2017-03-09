@@ -6,7 +6,6 @@
 
 #include <array>
 
-#include "math_defs.h"
 #include "module.h"
 #include "vector.h"
 

@@ -14,9 +14,9 @@ namespace Noise
         auto c0 = this->getGridValue( P, Pf );
         auto c1 = this->getGridValue( P, Pf + Vector<1>{1.0} );
 
-        auto u = Quintic( P[0] - Pf[0] );
+        auto u = Util::Quintic( P[0] - Pf[0] );
 
-        auto res = Lerp( u, c0, c1 );
+        auto res = Util::Lerp( u, c0, c1 );
 
         return res;
     }
@@ -32,12 +32,12 @@ namespace Noise
         auto c10 = this->getGridValue( P, Pf + Vector<2>{1.0, 0.0} );
         auto c11 = this->getGridValue( P, Pf + Vector<2>{1.0, 1.0} );
 
-        auto u = Quintic( P[0] - Pf[0] );
-        auto v = Quintic( P[1] - Pf[1] );
+        auto u = Util::Quintic( P[0] - Pf[0] );
+        auto v = Util::Quintic( P[1] - Pf[1] );
 
-        auto res = Lerp( v,
-                         Lerp( u, c00, c10 ),
-                         Lerp( u, c10, c11 ) );
+        auto res = Util::Lerp( v,
+                         Util::Lerp( u, c00, c10 ),
+                         Util::Lerp( u, c10, c11 ) );
 
         return res;
     }
@@ -58,17 +58,17 @@ namespace Noise
         auto c110 = this->getGridValue( P, Pf + Vector<3>{1.0, 1.0, 0.0} );
         auto c111 = this->getGridValue( P, Pf + Vector<3>{1.0, 1.0, 1.0} );
 
-        auto u = Quintic( P[0] - Pf[0] );
-        auto v = Quintic( P[1] - Pf[1] );
-        auto w = Quintic( P[2] - Pf[2] );
+        auto u = Util::Quintic( P[0] - Pf[0] );
+        auto v = Util::Quintic( P[1] - Pf[1] );
+        auto w = Util::Quintic( P[2] - Pf[2] );
 
-        auto res = Lerp( w,
-                         Lerp( v,
-                               Lerp( u, c000, c100 ),
-                               Lerp( u, c010, c110 ) ),
-                         Lerp( v,
-                               Lerp( u, c001, c101 ),
-                               Lerp( u, c011, c111 ) ) );
+        auto res = Util::Lerp( w,
+                         Util::Lerp( v,
+                               Util::Lerp( u, c000, c100 ),
+                               Util::Lerp( u, c010, c110 ) ),
+                         Util::Lerp( v,
+                               Util::Lerp( u, c001, c101 ),
+                               Util::Lerp( u, c011, c111 ) ) );
 
         return res;
     }
@@ -98,26 +98,26 @@ namespace Noise
         auto c1110 = this->getGridValue( P, Pf + Vector<4>{1.0, 1.0, 1.0, 0.0} );
         auto c1111 = this->getGridValue( P, Pf + Vector<4>{1.0, 1.0, 1.0, 1.0} );
 
-        auto u = Quintic( P[0] - Pf[0] );
-        auto v = Quintic( P[1] - Pf[1] );
-        auto w = Quintic( P[2] - Pf[2] );
-        auto t = Quintic( P[3] - Pf[3] );
+        auto u = Util::Quintic( P[0] - Pf[0] );
+        auto v = Util::Quintic( P[1] - Pf[1] );
+        auto w = Util::Quintic( P[2] - Pf[2] );
+        auto t = Util::Quintic( P[3] - Pf[3] );
 
-        auto res = Lerp( t,
-                         Lerp( w,
-                               Lerp( v,
-                                     Lerp( u, c0000, c1000 ),
-                                     Lerp( u, c0100, c1100 ) ),
-                               Lerp( v,
-                                     Lerp( u, c0010, c1010 ),
-                                     Lerp( u, c0110, c1110 ) ) ),
-                         Lerp( w,
-                               Lerp( v,
-                                     Lerp( u, c0001, c1001 ),
-                                     Lerp( u, c0101, c1101 ) ),
-                               Lerp( v,
-                                     Lerp( u, c0011, c1011 ),
-                                     Lerp( u, c0111, c1111 ) ) ) );
+        auto res = Util::Lerp( t,
+                         Util::Lerp( w,
+                               Util::Lerp( v,
+                                     Util::Lerp( u, c0000, c1000 ),
+                                     Util::Lerp( u, c0100, c1100 ) ),
+                               Util::Lerp( v,
+                                     Util::Lerp( u, c0010, c1010 ),
+                                     Util::Lerp( u, c0110, c1110 ) ) ),
+                         Util::Lerp( w,
+                               Util::Lerp( v,
+                                     Util::Lerp( u, c0001, c1001 ),
+                                     Util::Lerp( u, c0101, c1101 ) ),
+                               Util::Lerp( v,
+                                     Util::Lerp( u, c0011, c1011 ),
+                                     Util::Lerp( u, c0111, c1111 ) ) ) );
 
         return res;
     }
@@ -126,7 +126,7 @@ namespace Noise
                                  const Vector<1>& gridpos ) const
     {
         Vector<1> gradient {
-            NormalizeU64( HashFNV1A( this->seed ^ MakeRealU64Range( gridpos[0] ) ) )
+            Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[0] ) ) )
         };
         gradient.normalize();
 
@@ -139,8 +139,8 @@ namespace Noise
                                  const Vector<2>& gridpos ) const
     {
         Vector<2> gradient {
-            NormalizeU64( HashFNV1A( this->seed ^ MakeRealU64Range( gridpos[0] ) ) ),
-            NormalizeU64( HashFNV1A( this->seed ^ MakeRealU64Range( gridpos[1] ) ) )
+            Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[0] ) ) ),
+            Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[1] ) ) )
         };
         gradient.normalize();
 
@@ -153,9 +153,9 @@ namespace Noise
                                  const Vector<3>& gridpos ) const
     {
         Vector<3> gradient {
-            NormalizeU64( HashFNV1A( this->seed ^ MakeRealU64Range( gridpos[0] ) ) ),
-            NormalizeU64( HashFNV1A( this->seed ^ MakeRealU64Range( gridpos[1] ) ) ),
-            NormalizeU64( HashFNV1A( this->seed ^ MakeRealU64Range( gridpos[2] ) ) )
+            Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[0] ) ) ),
+            Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[1] ) ) ),
+            Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[2] ) ) )
         };
         gradient.normalize();
 
@@ -168,10 +168,10 @@ namespace Noise
                                  const Vector<4>& gridpos ) const
     {
         Vector<4> gradient {
-            NormalizeU64( HashFNV1A( this->seed ^ MakeRealU64Range( gridpos[0] ) ) ),
-            NormalizeU64( HashFNV1A( this->seed ^ MakeRealU64Range( gridpos[1] ) ) ),
-            NormalizeU64( HashFNV1A( this->seed ^ MakeRealU64Range( gridpos[2] ) ) ),
-            NormalizeU64( HashFNV1A( this->seed ^ MakeRealU64Range( gridpos[3] ) ) )
+            Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[0] ) ) ),
+            Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[1] ) ) ),
+            Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[2] ) ) ),
+            Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[3] ) ) )
         };
         gradient.normalize();
 

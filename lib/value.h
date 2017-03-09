@@ -4,7 +4,6 @@
 
 #include <cstdint>
 
-#include "math_defs.h"
 #include "module.h"
 
 namespace Noise

@@ -8,16 +8,16 @@ namespace Noise
     real_t Value::getValue( real_t x ) const
     {
         auto xf = std::floor( x );
-        auto xi = MakeRealUInt64Range( xf );
+        auto xi = Util::MakeRealU64Range( xf );
         
         auto tx = x - xf;
 
         auto c0 = this->getGridValue( xi );
         auto c1 = this->getGridValue( xi+1 );
 
-        auto u = Quintic( tx );
+        auto u = Util::Quintic( tx );
 
-        auto res = Lerp( u, c0, c1 );
+        auto res = Util::Lerp( u, c0, c1 );
 
         return res;
     }
@@ -25,9 +25,9 @@ namespace Noise
     real_t Value::getValue( real_t x, real_t y ) const
     {
         auto xf = std::floor( x );
-        auto xi = MakeRealUInt64Range( xf );
+        auto xi = Util::MakeRealU64Range( xf );
         auto yf = std::floor( y );
-        auto yi = MakeRealUInt64Range( yf );
+        auto yi = Util::MakeRealU64Range( yf );
 
         auto tx = x - xf;
         auto ty = y - yf;
@@ -37,12 +37,12 @@ namespace Noise
         auto c10 = this->getGridValue( xi+1, yi );
         auto c11 = this->getGridValue( xi+1, yi+1 );
 
-        auto u = Quintic( tx );
-        auto v = Quintic( ty );
+        auto u = Util::Quintic( tx );
+        auto v = Util::Quintic( ty );
 
-        auto res = Lerp( v,
-                         Lerp( u, c00, c10 ),
-                         Lerp( u, c10, c11 ) );
+        auto res = Util::Lerp( v,
+                         Util::Lerp( u, c00, c10 ),
+                         Util::Lerp( u, c10, c11 ) );
 
         return res;
     }
@@ -50,11 +50,11 @@ namespace Noise
     real_t Value::getValue( real_t x, real_t y, real_t z ) const
     {
         auto xf = std::floor( x );
-        auto xi = MakeRealUInt64Range( xf );
+        auto xi = Util::MakeRealU64Range( xf );
         auto yf = std::floor( y );
-        auto yi = MakeRealUInt64Range( yf );
+        auto yi = Util::MakeRealU64Range( yf );
         auto zf = std::floor( z );
-        auto zi = MakeRealUInt64Range( zf );
+        auto zi = Util::MakeRealU64Range( zf );
 
         auto tx = x - xf;
         auto ty = y - yf;
@@ -69,17 +69,17 @@ namespace Noise
         auto c110 = this->getGridValue( xi+1, yi+1, zi );
         auto c111 = this->getGridValue( xi+1, yi+1, zi+1 );
 
-        auto u = Quintic( tx );
-        auto v = Quintic( ty );
-        auto w = Quintic( tz );
+        auto u = Util::Quintic( tx );
+        auto v = Util::Quintic( ty );
+        auto w = Util::Quintic( tz );
 
-        auto res = Lerp( w,
-                         Lerp( v,
-                               Lerp( u, c000, c100 ),
-                               Lerp( u, c010, c110 ) ),
-                         Lerp( v,
-                               Lerp( u, c001, c101 ),
-                               Lerp( u, c011, c111 ) ) );
+        auto res = Util::Lerp( w,
+                         Util::Lerp( v,
+                               Util::Lerp( u, c000, c100 ),
+                               Util::Lerp( u, c010, c110 ) ),
+                         Util::Lerp( v,
+                               Util::Lerp( u, c001, c101 ),
+                               Util::Lerp( u, c011, c111 ) ) );
 
         return res;
     }
@@ -87,13 +87,13 @@ namespace Noise
     real_t Value::getValue( real_t x, real_t y, real_t z, real_t a ) const
     {
         auto xf = std::floor( x );
-        auto xi = MakeRealUInt64Range( xf );
+        auto xi = Util::MakeRealU64Range( xf );
         auto yf = std::floor( y );
-        auto yi = MakeRealUInt64Range( yf );
+        auto yi = Util::MakeRealU64Range( yf );
         auto zf = std::floor( z );
-        auto zi = MakeRealUInt64Range( zf );
+        auto zi = Util::MakeRealU64Range( zf );
         auto af = std::floor( a );
-        auto ai = MakeRealUInt64Range( af );
+        auto ai = Util::MakeRealU64Range( af );
 
         auto tx = x - xf;
         auto ty = y - yf;
@@ -117,26 +117,26 @@ namespace Noise
         auto c1110 = this->getGridValue( xi+1, yi+1, zi+1, ai );
         auto c1111 = this->getGridValue( xi+1, yi+1, zi+1, ai+1 );
 
-        auto u = Quintic( tx );
-        auto v = Quintic( ty );
-        auto w = Quintic( tz );
-        auto t = Quintic( ta );
+        auto u = Util::Quintic( tx );
+        auto v = Util::Quintic( ty );
+        auto w = Util::Quintic( tz );
+        auto t = Util::Quintic( ta );
 
-        auto res = Lerp( t,
-                         Lerp( w,
-                               Lerp( v,
-                                     Lerp( u, c0000, c1000 ),
-                                     Lerp( u, c0100, c1100 ) ),
-                               Lerp( v,
-                                     Lerp( u, c0010, c1010 ),
-                                     Lerp( u, c0110, c1110 ) ) ),
-                         Lerp( w,
-                               Lerp( v,
-                                     Lerp( u, c0001, c1001 ),
-                                     Lerp( u, c0101, c1101 ) ),
-                               Lerp( v,
-                                     Lerp( u, c0011, c1011 ),
-                                     Lerp( u, c0111, c1111 ) ) ) );
+        auto res = Util::Lerp( t,
+                         Util::Lerp( w,
+                               Util::Lerp( v,
+                                     Util::Lerp( u, c0000, c1000 ),
+                                     Util::Lerp( u, c0100, c1100 ) ),
+                               Util::Lerp( v,
+                                     Util::Lerp( u, c0010, c1010 ),
+                                     Util::Lerp( u, c0110, c1110 ) ) ),
+                         Util::Lerp( w,
+                               Util::Lerp( v,
+                                     Util::Lerp( u, c0001, c1001 ),
+                                     Util::Lerp( u, c0101, c1101 ) ),
+                               Util::Lerp( v,
+                                     Util::Lerp( u, c0011, c1011 ),
+                                     Util::Lerp( u, c0111, c1111 ) ) ) );
 
         return res;
     }
@@ -158,7 +158,7 @@ namespace Noise
 
         auto ival = ( n * ( n * n * prime1 + prime2 ) + prime3 ) & mask;
 
-        auto res = NormalizeU64( ival );
+        auto res = Util::NormalizeU64( ival );
 
         return res;
     }

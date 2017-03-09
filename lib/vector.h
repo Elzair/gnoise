@@ -8,8 +8,6 @@
 #include <array>
 #include <initializer_list>
 
-#include "math_defs.h"
-
 #include "util.h"
 
 namespace Noise
