@@ -25,12 +25,11 @@ namespace Noise
 
         uint64_t seed;
 
-        static const uint64_t X_NOISE_GEN     = 1619;
-        static const uint64_t Y_NOISE_GEN     = 31337;
-        static const uint64_t Z_NOISE_GEN     = 6971;
-        static const uint64_t A_NOISE_GEN     = 9067;
-        static const uint64_t SEED_NOISE_GEN  = 1013;
-        static const uint64_t SHIFT_NOISE_GEN = 8;
+        static const uint64_t X_NOISE_PRIME     = 6'343;
+        static const uint64_t Y_NOISE_PRIME     = 31'337;
+        static const uint64_t Z_NOISE_PRIME     = 22'807;
+        static const uint64_t A_NOISE_PRIME     = 50'581;
+        static const uint64_t SEED_NOISE_PRIME  = 39'479;
 
         real_t getGridValue( uint64_t x,
                              uint64_t y = 0,

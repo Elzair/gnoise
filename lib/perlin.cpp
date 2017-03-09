@@ -126,8 +126,7 @@ namespace Noise
                                  const Vector<1>& gridpos ) const
     {
         Vector<1> gradient {
-            NormalizeU64( XORShift128Plus( this->seed,
-                                           static_cast<uint64_t>( gridpos[0] ) ) )
+            NormalizeU64( HashFNV1A( this->seed ^ MakeRealU64Range( gridpos[0] ) ) )
         };
         gradient.normalize();
 
@@ -140,10 +139,8 @@ namespace Noise
                                  const Vector<2>& gridpos ) const
     {
         Vector<2> gradient {
-            NormalizeU64( XORShift128Plus( this->seed,
-                                           static_cast<uint64_t>( gridpos[0] ) ) ),
-            NormalizeU64( XORShift128Plus( this->seed,
-                                           static_cast<uint64_t>( gridpos[1] ) ) )
+            NormalizeU64( HashFNV1A( this->seed ^ MakeRealU64Range( gridpos[0] ) ) ),
+            NormalizeU64( HashFNV1A( this->seed ^ MakeRealU64Range( gridpos[1] ) ) )
         };
         gradient.normalize();
 
@@ -156,12 +153,9 @@ namespace Noise
                                  const Vector<3>& gridpos ) const
     {
         Vector<3> gradient {
-            NormalizeU64( XORShift128Plus( this->seed,
-                                           static_cast<uint64_t>( gridpos[0] ) ) ),
-            NormalizeU64( XORShift128Plus( this->seed,
-                                           static_cast<uint64_t>( gridpos[1] ) ) ),
-            NormalizeU64( XORShift128Plus( this->seed,
-                                           static_cast<uint64_t>( gridpos[2] ) ) )
+            NormalizeU64( HashFNV1A( this->seed ^ MakeRealU64Range( gridpos[0] ) ) ),
+            NormalizeU64( HashFNV1A( this->seed ^ MakeRealU64Range( gridpos[1] ) ) ),
+            NormalizeU64( HashFNV1A( this->seed ^ MakeRealU64Range( gridpos[2] ) ) )
         };
         gradient.normalize();
 
@@ -174,14 +168,10 @@ namespace Noise
                                  const Vector<4>& gridpos ) const
     {
         Vector<4> gradient {
-            NormalizeU64( XORShift128Plus( this->seed,
-                                           static_cast<uint64_t>( pos[0] ) ) ),
-            NormalizeU64( XORShift128Plus( this->seed,
-                                           static_cast<uint64_t>( pos[1] ) ) ),
-            NormalizeU64( XORShift128Plus( this->seed,
-                                           static_cast<uint64_t>( pos[2] ) ) ),
-            NormalizeU64( XORShift128Plus( this->seed,
-                                           static_cast<uint64_t>( pos[3] ) ) )
+            NormalizeU64( HashFNV1A( this->seed ^ MakeRealU64Range( gridpos[0] ) ) ),
+            NormalizeU64( HashFNV1A( this->seed ^ MakeRealU64Range( gridpos[1] ) ) ),
+            NormalizeU64( HashFNV1A( this->seed ^ MakeRealU64Range( gridpos[2] ) ) ),
+            NormalizeU64( HashFNV1A( this->seed ^ MakeRealU64Range( gridpos[3] ) ) )
         };
         gradient.normalize();
 

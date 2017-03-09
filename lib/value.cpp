@@ -8,7 +8,7 @@ namespace Noise
     real_t Value::getValue( real_t x ) const
     {
         auto xf = std::floor( x );
-        auto xi = static_cast<uint64_t>( xf );
+        auto xi = MakeRealUInt64Range( xf );
         
         auto tx = x - xf;
 
@@ -25,9 +25,9 @@ namespace Noise
     real_t Value::getValue( real_t x, real_t y ) const
     {
         auto xf = std::floor( x );
-        auto xi = static_cast<uint64_t>( xf );
+        auto xi = MakeRealUInt64Range( xf );
         auto yf = std::floor( y );
-        auto yi = static_cast<uint64_t>( yf );
+        auto yi = MakeRealUInt64Range( yf );
 
         auto tx = x - xf;
         auto ty = y - yf;
@@ -50,11 +50,11 @@ namespace Noise
     real_t Value::getValue( real_t x, real_t y, real_t z ) const
     {
         auto xf = std::floor( x );
-        auto xi = static_cast<uint64_t>( xf );
+        auto xi = MakeRealUInt64Range( xf );
         auto yf = std::floor( y );
-        auto yi = static_cast<uint64_t>( yf );
+        auto yi = MakeRealUInt64Range( yf );
         auto zf = std::floor( z );
-        auto zi = static_cast<uint64_t>( zf );
+        auto zi = MakeRealUInt64Range( zf );
 
         auto tx = x - xf;
         auto ty = y - yf;
@@ -87,13 +87,13 @@ namespace Noise
     real_t Value::getValue( real_t x, real_t y, real_t z, real_t a ) const
     {
         auto xf = std::floor( x );
-        auto xi = static_cast<uint64_t>( xf );
+        auto xi = MakeRealUInt64Range( xf );
         auto yf = std::floor( y );
-        auto yi = static_cast<uint64_t>( yf );
+        auto yi = MakeRealUInt64Range( yf );
         auto zf = std::floor( z );
-        auto zi = static_cast<uint64_t>( zf );
+        auto zi = MakeRealUInt64Range( zf );
         auto af = std::floor( a );
-        auto ai = static_cast<uint64_t>( af );
+        auto ai = MakeRealUInt64Range( af );
 
         auto tx = x - xf;
         auto ty = y - yf;
@@ -143,17 +143,17 @@ namespace Noise
     
     real_t Value::getGridValue( uint64_t x, uint64_t y, uint64_t z, uint64_t a ) const
     {
-        const uint64_t prime1 = 60493;
-        const uint64_t prime2 = 19990303;
-        const uint64_t prime3 = 1376312589;
+        const uint64_t prime1 = 22'801'763'489;   // one-billionth prime
+        const uint64_t prime2 = 47'055'833'459;   // two-billionth prime
+        const uint64_t prime3 = 97'011'687'217;   // four-billionth prime
         const uint64_t shift  = 29;
         const uint64_t mask   = 0x7fffffffffffffff;
 
-        auto n = ( Value::X_NOISE_GEN    * x +
-                   Value::Y_NOISE_GEN    * y +
-                   Value::Z_NOISE_GEN    * z +
-                   Value::A_NOISE_GEN    * a +
-                   Value::SEED_NOISE_GEN * this->seed ) & mask;
+        auto n = ( Value::X_NOISE_PRIME    * x +
+                   Value::Y_NOISE_PRIME    * y +
+                   Value::Z_NOISE_PRIME    * z +
+                   Value::A_NOISE_PRIME    * a +
+                   Value::SEED_NOISE_PRIME * this->seed ) & mask;
         n = ( n >> shift ) ^ n;
 
         auto ival = ( n * ( n * n * prime1 + prime2 ) + prime3 ) & mask;

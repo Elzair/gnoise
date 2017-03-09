@@ -2,7 +2,10 @@
 
 #pragma once
 
+#include <cmath>
 #include <cstdint>
+
+#include <limits>
 
 #include "math_defs.h"
 
@@ -23,25 +26,58 @@ namespace Noise
         return s1 + y;
     }
 
+    static inline uint64_t HashFNV1A( uint64_t x )
+    {
+        const uint64_t prime = 1099511628211; // i.e. 2^40 + 2^8 + 179
+        uint64_t       hash  = 14695981039346656037;
+
+        for ( auto i = 0; i < sizeof( uint64_t ); i++ )
+        {
+            hash = ( hash ^ ( x & 0xff ) ) * prime;
+            x    = x >> 8;
+        }
+
+        return hash;
+    }
+
     // This function normalizes a 64-bit unsigned integer between -1.0 and 1.0.
     static inline real_t NormalizeU64( uint64_t x )
     {
-        const     uint64_t mask        = 0x7fffffffffffffff;             // i.e. 2^63
-        constexpr real_t   inv_max_val = 1.0 / 4.611686018427387904e+18; // i.e. 1 / 2^62
+        constexpr real_t invHalfMaxU64 = 2.0 / static_cast<real_t>( std::numeric_limits<uint64_t>::max() );
 
-        // First, strip the 2 most significant bits from the input value.
-        uint64_t step1 = x & mask;
-        // Current Range: 0 ... 2^63 - 1
-
-        // Next, divide value by 2^62.
-        real_t step2 = static_cast<real_t>( step1 ) * inv_max_val;
+        // Divide the number by half the maximum uint64_t.
+        real_t step1 = x * invHalfMaxU64;
         // Current Range: 0.0 ... 2.0
-
-        // Finally, subtract value from 1.0 to normalize it.
-        real_t xnorm = 1.0 - step2;
+        
+        // Subtract 1 to normalize the value.
+        real_t res = step1 - 1.0;
         // Current Range: -1.0 ... 1.0
 
-        return xnorm;
+        return res;
+    }
+
+    static inline uint64_t MakeRealU64Range( real_t x )
+    {
+        real_t low  = static_cast<real_t>( std::numeric_limits<int64_t>::min() );
+        real_t high = static_cast<real_t>( std::numeric_limits<int64_t>::max() );
+
+        // First, clamp to int64_t range.
+        if ( x < low )
+        {
+            x = low;
+        }
+        else if ( x > high )
+        {
+            x = high;
+        }
+
+        // Now, convert to uint64_t range.
+        real_t val = x + std::abs( low ); 
+
+        // Finally, convert number to uint64_t.
+        uint64_t res = static_cast<uint64_t>( val );
+
+        return res;
     }
 
     static inline real_t Quintic( real_t t )
@@ -52,35 +88,5 @@ namespace Noise
     static inline real_t Lerp( real_t t, real_t a, real_t b )
     {
         return a + t * ( b - a );
-    }
-
-    static inline real_t InvSqrt( real_t num )
-    {
-        constexpr real_t threehalfs = 3.0 / 2.0;
-
-        real_t x2, y;
-
-        x2 = num * 0.5;
-        y  = num;
-
-        #if REAL_T_IS_DOUBLE
-        uint64_t     i;
-        const real_t weird_constant = 0x5fe6eb50c7b537a9;
-
-        i = *( reinterpret_cast<uint64_t*>( &y ) );
-        #else
-        uint32_t     i;
-        const real_t weird_constant = 0x5f3759df;
-
-        i = *( reinterpret_cast<uint32_t*>( &y ) );
-        #endif
-
-        i = weird_constant - ( i >> 1 );
-        
-        y = *( reinterpret_cast<real_t*>( &i ) );
-        
-        y = y * ( threehalfs - ( x2 * y * y ) );
-
-        return y;
     }
 }

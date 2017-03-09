@@ -105,7 +105,7 @@ namespace Noise
 
         Vector<N>& normalize()
         {
-            real_t norm_mul = InvSqrt( this->getLengthSq() );
+            real_t norm_mul = 1.0 / this->getLength();
 
             for ( auto& val : this->vals )
             {
