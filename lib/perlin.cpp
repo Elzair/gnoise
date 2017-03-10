@@ -8,11 +8,11 @@ namespace Noise
 {
     real_t Perlin::getValue( real_t x ) const
     {
-        Vector<1> P  = { x };
-        Vector<1> Pf = { std::floor( x ) };
+        Noise::VectorN<1> P  = { x };
+        Noise::VectorN<1> Pf = { std::floor( x ) };
         
         auto c0 = this->getGridValue( P, Pf );
-        auto c1 = this->getGridValue( P, Pf + Vector<1>{1.0} );
+        auto c1 = this->getGridValue( P, Pf + Noise::VectorN<1>{1.0} );
 
         auto u = Util::Quintic( P[0] - Pf[0] );
 
@@ -23,14 +23,14 @@ namespace Noise
 
     real_t Perlin::getValue( real_t x, real_t y ) const
     {
-        Vector<2> P  = { x, y };
-        Vector<2> Pf = { std::floor( x ),
+        Noise::VectorN<2> P  = { x, y };
+        Noise::VectorN<2> Pf = { std::floor( x ),
                          std::floor( y ) };
 
         auto c00 = this->getGridValue( P, Pf );
-        auto c01 = this->getGridValue( P, Pf + Vector<2>{0.0, 1.0} );
-        auto c10 = this->getGridValue( P, Pf + Vector<2>{1.0, 0.0} );
-        auto c11 = this->getGridValue( P, Pf + Vector<2>{1.0, 1.0} );
+        auto c01 = this->getGridValue( P, Pf + Noise::VectorN<2>{0.0, 1.0} );
+        auto c10 = this->getGridValue( P, Pf + Noise::VectorN<2>{1.0, 0.0} );
+        auto c11 = this->getGridValue( P, Pf + Noise::VectorN<2>{1.0, 1.0} );
 
         auto u = Util::Quintic( P[0] - Pf[0] );
         auto v = Util::Quintic( P[1] - Pf[1] );
@@ -44,19 +44,19 @@ namespace Noise
 
     real_t Perlin::getValue( real_t x, real_t y, real_t z ) const
     {
-        Vector<3> P  = { x, y, z };
-        Vector<3> Pf = { std::floor( x ),
+        Noise::VectorN<3> P  = { x, y, z };
+        Noise::VectorN<3> Pf = { std::floor( x ),
                          std::floor( y ),
                          std::floor( z ) };
 
         auto c000 = this->getGridValue( P, Pf );
-        auto c001 = this->getGridValue( P, Pf + Vector<3>{0.0, 0.0, 1.0} );
-        auto c010 = this->getGridValue( P, Pf + Vector<3>{0.0, 1.0, 0.0} );
-        auto c011 = this->getGridValue( P, Pf + Vector<3>{0.0, 1.0, 1.0} );
-        auto c100 = this->getGridValue( P, Pf + Vector<3>{1.0, 0.0, 0.0} );
-        auto c101 = this->getGridValue( P, Pf + Vector<3>{1.0, 0.0, 1.0} );
-        auto c110 = this->getGridValue( P, Pf + Vector<3>{1.0, 1.0, 0.0} );
-        auto c111 = this->getGridValue( P, Pf + Vector<3>{1.0, 1.0, 1.0} );
+        auto c001 = this->getGridValue( P, Pf + Noise::VectorN<3>{0.0, 0.0, 1.0} );
+        auto c010 = this->getGridValue( P, Pf + Noise::VectorN<3>{0.0, 1.0, 0.0} );
+        auto c011 = this->getGridValue( P, Pf + Noise::VectorN<3>{0.0, 1.0, 1.0} );
+        auto c100 = this->getGridValue( P, Pf + Noise::VectorN<3>{1.0, 0.0, 0.0} );
+        auto c101 = this->getGridValue( P, Pf + Noise::VectorN<3>{1.0, 0.0, 1.0} );
+        auto c110 = this->getGridValue( P, Pf + Noise::VectorN<3>{1.0, 1.0, 0.0} );
+        auto c111 = this->getGridValue( P, Pf + Noise::VectorN<3>{1.0, 1.0, 1.0} );
 
         auto u = Util::Quintic( P[0] - Pf[0] );
         auto v = Util::Quintic( P[1] - Pf[1] );
@@ -75,28 +75,28 @@ namespace Noise
 
     real_t Perlin::getValue( real_t x, real_t y, real_t z, real_t a ) const
     {
-        Vector<4> P  = { x, y, z, a };
-        Vector<4> Pf = { std::floor( x ),
+        Noise::VectorN<4> P  = { x, y, z, a };
+        Noise::VectorN<4> Pf = { std::floor( x ),
                          std::floor( y ),
                          std::floor( z ),
                          std::floor( a ) };
 
         auto c0000 = this->getGridValue( P, Pf );
-        auto c0001 = this->getGridValue( P, Pf + Vector<4>{0.0, 0.0, 0.0, 1.0} );
-        auto c0010 = this->getGridValue( P, Pf + Vector<4>{0.0, 0.0, 1.0, 0.0} );
-        auto c0011 = this->getGridValue( P, Pf + Vector<4>{0.0, 0.0, 1.0, 1.0} );
-        auto c0100 = this->getGridValue( P, Pf + Vector<4>{0.0, 1.0, 0.0, 0.0} );
-        auto c0101 = this->getGridValue( P, Pf + Vector<4>{0.0, 1.0, 0.0, 1.0} );
-        auto c0110 = this->getGridValue( P, Pf + Vector<4>{0.0, 1.0, 1.0, 0.0} );
-        auto c0111 = this->getGridValue( P, Pf + Vector<4>{0.0, 1.0, 1.0, 1.0} );
-        auto c1000 = this->getGridValue( P, Pf + Vector<4>{1.0, 0.0, 0.0, 0.0} );
-        auto c1001 = this->getGridValue( P, Pf + Vector<4>{1.0, 0.0, 0.0, 1.0} );
-        auto c1010 = this->getGridValue( P, Pf + Vector<4>{1.0, 0.0, 1.0, 0.0} );
-        auto c1011 = this->getGridValue( P, Pf + Vector<4>{1.0, 0.0, 1.0, 1.0} );
-        auto c1100 = this->getGridValue( P, Pf + Vector<4>{1.0, 1.0, 0.0, 0.0} );
-        auto c1101 = this->getGridValue( P, Pf + Vector<4>{1.0, 1.0, 0.0, 1.0} );
-        auto c1110 = this->getGridValue( P, Pf + Vector<4>{1.0, 1.0, 1.0, 0.0} );
-        auto c1111 = this->getGridValue( P, Pf + Vector<4>{1.0, 1.0, 1.0, 1.0} );
+        auto c0001 = this->getGridValue( P, Pf + Noise::VectorN<4>{0.0, 0.0, 0.0, 1.0} );
+        auto c0010 = this->getGridValue( P, Pf + Noise::VectorN<4>{0.0, 0.0, 1.0, 0.0} );
+        auto c0011 = this->getGridValue( P, Pf + Noise::VectorN<4>{0.0, 0.0, 1.0, 1.0} );
+        auto c0100 = this->getGridValue( P, Pf + Noise::VectorN<4>{0.0, 1.0, 0.0, 0.0} );
+        auto c0101 = this->getGridValue( P, Pf + Noise::VectorN<4>{0.0, 1.0, 0.0, 1.0} );
+        auto c0110 = this->getGridValue( P, Pf + Noise::VectorN<4>{0.0, 1.0, 1.0, 0.0} );
+        auto c0111 = this->getGridValue( P, Pf + Noise::VectorN<4>{0.0, 1.0, 1.0, 1.0} );
+        auto c1000 = this->getGridValue( P, Pf + Noise::VectorN<4>{1.0, 0.0, 0.0, 0.0} );
+        auto c1001 = this->getGridValue( P, Pf + Noise::VectorN<4>{1.0, 0.0, 0.0, 1.0} );
+        auto c1010 = this->getGridValue( P, Pf + Noise::VectorN<4>{1.0, 0.0, 1.0, 0.0} );
+        auto c1011 = this->getGridValue( P, Pf + Noise::VectorN<4>{1.0, 0.0, 1.0, 1.0} );
+        auto c1100 = this->getGridValue( P, Pf + Noise::VectorN<4>{1.0, 1.0, 0.0, 0.0} );
+        auto c1101 = this->getGridValue( P, Pf + Noise::VectorN<4>{1.0, 1.0, 0.0, 1.0} );
+        auto c1110 = this->getGridValue( P, Pf + Noise::VectorN<4>{1.0, 1.0, 1.0, 0.0} );
+        auto c1111 = this->getGridValue( P, Pf + Noise::VectorN<4>{1.0, 1.0, 1.0, 1.0} );
 
         auto u = Util::Quintic( P[0] - Pf[0] );
         auto v = Util::Quintic( P[1] - Pf[1] );
@@ -122,10 +122,10 @@ namespace Noise
         return res;
     }
 
-    real_t Perlin::getGridValue( const Vector<1>& pos,
-                                 const Vector<1>& gridpos ) const
+    real_t Perlin::getGridValue( const Noise::VectorN<1>& pos,
+                                 const Noise::VectorN<1>& gridpos ) const
     {
-        Vector<1> gradient {
+        Noise::VectorN<1> gradient {
             Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[0] ) ) )
         };
         gradient.normalize();
@@ -135,10 +135,10 @@ namespace Noise
         return res;
     }
 
-    real_t Perlin::getGridValue( const Vector<2>& pos,
-                                 const Vector<2>& gridpos ) const
+    real_t Perlin::getGridValue( const Noise::VectorN<2>& pos,
+                                 const Noise::VectorN<2>& gridpos ) const
     {
-        Vector<2> gradient {
+        Noise::VectorN<2> gradient {
             Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[0] ) ) ),
             Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[1] ) ) )
         };
@@ -149,10 +149,10 @@ namespace Noise
         return res;
     }
 
-    real_t Perlin::getGridValue( const Vector<3>& pos,
-                                 const Vector<3>& gridpos ) const
+    real_t Perlin::getGridValue( const Noise::VectorN<3>& pos,
+                                 const Noise::VectorN<3>& gridpos ) const
     {
-        Vector<3> gradient {
+        Noise::VectorN<3> gradient {
             Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[0] ) ) ),
             Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[1] ) ) ),
             Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[2] ) ) )
@@ -164,10 +164,10 @@ namespace Noise
         return res;
     }
 
-    real_t Perlin::getGridValue( const Vector<4>& pos,
-                                 const Vector<4>& gridpos ) const
+    real_t Perlin::getGridValue( const Noise::VectorN<4>& pos,
+                                 const Noise::VectorN<4>& gridpos ) const
     {
-        Vector<4> gradient {
+        Noise::VectorN<4> gradient {
             Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[0] ) ) ),
             Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[1] ) ) ),
             Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[2] ) ) ),

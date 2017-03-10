@@ -32,6 +32,17 @@ namespace Noise
             return hash;
         }
 
+        static inline uint64_t XORShift128Plus( uint64_t& s0, uint64_t& s1 )
+        {
+            uint64_t       x = s0;
+            const uint64_t y = s1;
+
+            s0 = y;
+            x ^= x << 23;
+            s1 = x ^ y ^ ( x >> 17 ) ^ ( y >> 26 );
+            return s1 + y;
+        }
+
         // This function normalizes a 64-bit unsigned integer between -1.0 and 1.0.
         static inline real_t NormalizeU64( uint64_t x )
         {

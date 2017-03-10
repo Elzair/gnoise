@@ -11,3 +11,8 @@ typedef double real_t;
 typedef float real_t;
 
 #endif
+
+#include <vector>
+
+template<typename T>
+using Vector = std::vector<T>;

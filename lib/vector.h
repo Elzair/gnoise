@@ -13,13 +13,13 @@
 namespace Noise
 {
     template<std::size_t N>
-    class Vector
+    class VectorN
     {
     public:
 
         std::array<real_t, N> vals;
 
-        Vector<N>& operator+=( const Vector<N>& v )
+        VectorN<N>& operator+=( const VectorN<N>& v )
         {
             for ( auto i = 0; i < N; i++ )
             {
@@ -29,7 +29,7 @@ namespace Noise
             return *this;
         }
     
-        Vector<N>& operator+=( real_t n )
+        VectorN<N>& operator+=( real_t n )
         {
             for ( auto i = 0; i < N; i++ )
             {
@@ -39,7 +39,7 @@ namespace Noise
             return *this;
         }
 
-        Vector<N>& operator-=( const Vector<N>& v )
+        VectorN<N>& operator-=( const VectorN<N>& v )
         {
             for ( auto i = 0; i < N; i++ )
             {
@@ -49,7 +49,7 @@ namespace Noise
             return *this;
         }
         
-        Vector<N>& operator-=( real_t n )
+        VectorN<N>& operator-=( real_t n )
         {
             for ( auto i = 0; i < N; i++ )
             {
@@ -59,7 +59,7 @@ namespace Noise
             return *this;
         }
 
-        Vector<N>& operator*=( const Vector<N>& v )
+        VectorN<N>& operator*=( const VectorN<N>& v )
         {
             for ( auto i = 0; i < N; i++ )
             {
@@ -69,7 +69,7 @@ namespace Noise
             return *this;
         }
          
-        Vector<N>& operator*=( real_t n )
+        VectorN<N>& operator*=( real_t n )
         {
             for ( auto i = 0; i < N; i++ )
             {
@@ -79,7 +79,7 @@ namespace Noise
             return *this;
         }
    
-        Vector<N>& operator/=( const Vector<N>& v )
+        VectorN<N>& operator/=( const VectorN<N>& v )
         {
             for ( auto i = 0; i < N; i++ )
             {
@@ -89,7 +89,7 @@ namespace Noise
             return *this;
         }
          
-        Vector<N>& operator/=( real_t n )
+        VectorN<N>& operator/=( real_t n )
         {
             real_t nrecip = 1.0 / n; // Multiplying by 1/n should be faster than dividing by n.
 
@@ -101,7 +101,7 @@ namespace Noise
             return *this;
         }
 
-        Vector<N>& normalize()
+        VectorN<N>& normalize()
         {
             real_t norm_mul = 1.0 / this->getLength();
 
@@ -123,79 +123,79 @@ namespace Noise
             return this->vals[ idx ];
         }
 
-        Vector<N> operator+( const Vector<N>& v ) const
+        VectorN<N> operator+( const VectorN<N>& v ) const
         {
-            Vector copy = *this;
+            VectorN copy = *this;
             copy       += v;
         
             return copy;
         }
 
-        Vector<N> operator+( real_t n ) const
+        VectorN<N> operator+( real_t n ) const
         {
-            Vector copy = *this;
+            VectorN copy = *this;
             copy       += n;
         
             return copy;
         }
 
-        Vector<N> operator-( const Vector<N>& v ) const
+        VectorN<N> operator-( const VectorN<N>& v ) const
         {
-            Vector copy = *this;
+            VectorN copy = *this;
             copy       -= v;
         
             return copy;
         }
 
-        Vector<N> operator-( real_t n ) const
+        VectorN<N> operator-( real_t n ) const
         {
-            Vector copy = *this;
+            VectorN copy = *this;
             copy       -= n;
         
             return copy;
         }
 
-        Vector<N> operator*( const Vector<N>& v ) const
+        VectorN<N> operator*( const VectorN<N>& v ) const
         {
-            Vector copy = *this;
+            VectorN copy = *this;
             copy       *= v;
         
             return copy;
         }
  
-        Vector<N> operator*( real_t n ) const
+        VectorN<N> operator*( real_t n ) const
         {
-            Vector copy = *this;
+            VectorN copy = *this;
             copy       *= n;
         
             return copy;
         }
    
-        Vector<N> operator/( const Vector<N>& v ) const
+        VectorN<N> operator/( const VectorN<N>& v ) const
         {
-            Vector copy = *this;
+            VectorN copy = *this;
             copy       /= v;
         
             return copy;
         }
  
-        Vector<N> operator/( real_t n ) const
+        VectorN<N> operator/( real_t n ) const
         {
-            Vector copy = *this;
+            VectorN copy = *this;
             copy       /= n;
         
             return copy;
         }
 
-        Vector<N> normalized() const
+        VectorN<N> normalized() const
         {
-            Vector copy = *this;
+            VectorN copy = *this;
             copy.normalize();
 
             return copy;
         }
 
-        real_t dot( const Vector<N>& v ) const
+        real_t dot( const VectorN<N>& v ) const
         {
             real_t dot_product;
 
@@ -217,7 +217,6 @@ namespace Noise
         }
 
     private:
-    
 
         inline real_t getLengthSq() const
         {

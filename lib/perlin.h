@@ -27,9 +27,13 @@ namespace Noise
 
         uint64_t seed;
 
-        real_t getGridValue( const Vector<1>& pos, const Vector<1>& gridpos ) const;
-        real_t getGridValue( const Vector<2>& pos, const Vector<2>& gridpos ) const;
-        real_t getGridValue( const Vector<3>& pos, const Vector<3>& gridpos ) const;
-        real_t getGridValue( const Vector<4>& pos, const Vector<4>& gridpos ) const;
+        real_t getGridValue( const Noise::VectorN<1>& pos,
+                             const Noise::VectorN<1>& gridpos ) const;
+        real_t getGridValue( const Noise::VectorN<2>& pos,
+                             const Noise::VectorN<2>& gridpos ) const;
+        real_t getGridValue( const Noise::VectorN<3>& pos,
+                             const Noise::VectorN<3>& gridpos ) const;
+        real_t getGridValue( const Noise::VectorN<4>& pos,
+                             const Noise::VectorN<4>& gridpos ) const;
     };
 }
