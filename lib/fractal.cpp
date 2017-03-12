@@ -86,33 +86,6 @@ namespace Noise
         return res;
     }
 
-    RidgedMultiFractal1D::RidgedMultiFractal1D(
-        Module1D& source,
-        uint32_t  numOctaves,
-        real_t    lacunarity,
-        real_t    h,
-        real_t    offset,
-        real_t    gain
-    ) :
-        source( source ),
-        numOctaves( numOctaves ),
-        lacunarity( lacunarity ),
-        h( h ),
-        offset( offset ),
-        gain( gain )
-    {
-        // Calculate the spectral weights.
-        this->spectralWeights.resize( this->numOctaves );
-
-        real_t frequency = 1.0;
-
-        for ( auto i = 0; i < this->numOctaves; i++ )
-        {
-            this->spectralWeights[i] = pow( frequency, this->h );
-            frequency *= this->lacunarity;
-        }
-    }
-
     real_t RidgedMultiFractal1D::getValue( real_t x ) const
     {
         real_t frequency = 1.0;
@@ -146,39 +119,13 @@ namespace Noise
             }
 
             // Add val to output.
-            res += ( this->spectralWeights[i] * val );
+            real_t spectralWeight = pow( frequency, this->h );
+            res += spectralWeight * val;
 
             frequency *= this->lacunarity;
         }
 
         return res;
-    }
-
-    RidgedMultiFractal2D::RidgedMultiFractal2D(
-        Module2D& source,
-        uint32_t  numOctaves,
-        real_t    lacunarity,
-        real_t    h,
-        real_t    offset,
-        real_t    gain
-    ) :
-        source( source ),
-        numOctaves( numOctaves ),
-        lacunarity( lacunarity ),
-        h( h ),
-        offset( offset ),
-        gain( gain )
-    {
-        // Calculate the spectral weights.
-        this->spectralWeights.resize( this->numOctaves );
-
-        real_t frequency = 1.0;
-
-        for ( auto i = 0; i < this->numOctaves; i++ )
-        {
-            this->spectralWeights[i] = pow( frequency, this->h );
-            frequency *= this->lacunarity;
-        }
     }
 
     real_t RidgedMultiFractal2D::getValue( real_t x, real_t y ) const
@@ -215,7 +162,8 @@ namespace Noise
             }
 
             // Add val to output.
-            res += ( this->spectralWeights[i] * val );
+            real_t spectralWeight = pow( frequency, this->h );
+            res += spectralWeight * val;
 
             frequency *= this->lacunarity;
         }
@@ -223,36 +171,10 @@ namespace Noise
         return res;
     }
 
-    RidgedMultiFractal3D::RidgedMultiFractal3D(
-        Module3D& source,
-        uint32_t  numOctaves,
-        real_t    lacunarity,
-        real_t    h,
-        real_t    offset,
-        real_t    gain
-    ) :
-        source( source ),
-        numOctaves( numOctaves ),
-        lacunarity( lacunarity ),
-        h( h ),
-        offset( offset ),
-        gain( gain )
-    {
-        // Calculate the spectral weights.
-        this->spectralWeights.resize( this->numOctaves );
-
-        real_t frequency = 1.0;
-
-        for ( auto i = 0; i < this->numOctaves; i++ )
-        {
-            this->spectralWeights[i] = pow( frequency, this->h );
-            frequency *= this->lacunarity;
-        }
-    }
-
     real_t RidgedMultiFractal3D::getValue( real_t x, real_t y, real_t z ) const
     {
         real_t frequency = 1.0;
+        real_t specWt    = 0.0;
         real_t weight    = 1.0;
         real_t value;
         real_t res;
@@ -285,39 +207,13 @@ namespace Noise
             }
 
             // Add val to output.
-            res += ( this->spectralWeights[i] * val );
+            real_t spectralWeight = pow( frequency, this->h );
+            res += spectralWeight * val;
 
             frequency *= this->lacunarity;
         }
 
         return res;
-    }
-
-    RidgedMultiFractal4D::RidgedMultiFractal4D(
-        Module4D& source,
-        uint32_t  numOctaves,
-        real_t    lacunarity,
-        real_t    h,
-        real_t    offset,
-        real_t    gain
-    ) :
-        source( source ),
-        numOctaves( numOctaves ),
-        lacunarity( lacunarity ),
-        h( h ),
-        offset( offset ),
-        gain( gain )
-    {
-        // Calculate the spectral weights.
-        this->spectralWeights.resize( this->numOctaves );
-
-        real_t frequency = 1.0;
-
-        for ( auto i = 0; i < this->numOctaves; i++ )
-        {
-            this->spectralWeights[i] = pow( frequency, this->h );
-            frequency *= this->lacunarity;
-        }
     }
 
     real_t RidgedMultiFractal4D::getValue( real_t x, real_t y, real_t z, real_t w ) const
@@ -356,7 +252,8 @@ namespace Noise
             }
 
             // Add val to output.
-            res += ( this->spectralWeights[i] * val );
+            real_t spectralWeight = pow( frequency, this->h );
+            res += spectralWeight * val;
 
             frequency *= this->lacunarity;
         }

@@ -113,7 +113,14 @@ namespace Noise
                               real_t    lacunarity = 1.5,
                               real_t    h          = 1.0,
                               real_t    offset     = 1.0,
-                              real_t    gain       = 2.0 );        
+                              real_t    gain       = 2.0 ) :
+            source( source ),
+            numOctaves( numOctaves ),
+            lacunarity( lacunarity ),
+            h( h ),
+            offset( offset ),
+            gain( gain )
+        {}       
 
         virtual real_t getValue( real_t x ) const override;
 
@@ -125,8 +132,6 @@ namespace Noise
         real_t    h;
         real_t    offset;
         real_t    gain;
-
-        Vector<real_t> spectralWeights;
     };
 
     class RidgedMultiFractal2D : public Module2D
@@ -138,7 +143,14 @@ namespace Noise
                               real_t    lacunarity = 1.5,
                               real_t    h          = 1.0,
                               real_t    offset     = 1.0,
-                              real_t    gain       = 2.0 );        
+                              real_t    gain       = 2.0 ) :
+            source( source ),
+            numOctaves( numOctaves ),
+            lacunarity( lacunarity ),
+            h( h ),
+            offset( offset ),
+            gain( gain )
+        {}      
 
         virtual real_t getValue( real_t x, real_t y ) const override;
 
@@ -150,8 +162,6 @@ namespace Noise
         real_t    h;
         real_t    offset;
         real_t    gain;
-
-        Vector<real_t> spectralWeights;
     };
 
     class RidgedMultiFractal3D : public Module3D
@@ -163,7 +173,15 @@ namespace Noise
                               real_t    lacunarity = 1.5,
                               real_t    h          = 1.0,
                               real_t    offset     = 1.0,
-                              real_t    gain       = 2.0 );        
+                              real_t    gain       = 2.0 ) :
+            source( source ),
+            numOctaves( numOctaves ),
+            lacunarity( lacunarity ),
+            h( h ),
+            offset( offset ),
+            gain( gain )
+        {}      
+      
 
         virtual real_t getValue( real_t x, real_t y, real_t z ) const override;
 
@@ -175,8 +193,6 @@ namespace Noise
         real_t    h;
         real_t    offset;
         real_t    gain;
-
-        Vector<real_t> spectralWeights;
     };
 
     class RidgedMultiFractal4D : public Module4D
@@ -188,7 +204,14 @@ namespace Noise
                               real_t    lacunarity = 1.5,
                               real_t    h          = 1.0,
                               real_t    offset     = 1.0,
-                              real_t    gain       = 2.0 );        
+                              real_t    gain       = 2.0 ) :
+            source( source ),
+            numOctaves( numOctaves ),
+            lacunarity( lacunarity ),
+            h( h ),
+            offset( offset ),
+            gain( gain )
+        {}      
 
         virtual real_t getValue( real_t x, real_t y, real_t z, real_t a ) const override;
 
@@ -200,7 +223,5 @@ namespace Noise
         real_t    h;
         real_t    offset;
         real_t    gain;
-
-        Vector<real_t> spectralWeights;
     };
 }
