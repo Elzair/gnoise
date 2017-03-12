@@ -3,7 +3,7 @@
 
 namespace Noise
 {
-    real_t White::getValue( real_t x ) const
+    real_t White1D::getValue( real_t x ) const
     {
         auto xr  = Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( x ) );
         auto res = Util::NormalizeU64( xr );
@@ -11,7 +11,7 @@ namespace Noise
         return res;
     }
 
-    real_t White::getValue( real_t x, real_t y ) const
+    real_t White2D::getValue( real_t x, real_t y ) const
     {
         auto xr  = Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( x ) );
         auto yr  = Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( y ) );
@@ -20,7 +20,7 @@ namespace Noise
         return res;
     }
 
-    real_t White::getValue( real_t x, real_t y, real_t z ) const
+    real_t White3D::getValue( real_t x, real_t y, real_t z ) const
     {
         auto xr  = Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( x ) );
         auto yr  = Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( y ) );
@@ -30,7 +30,7 @@ namespace Noise
         return res;
     }
 
-    real_t White::getValue( real_t x, real_t y, real_t z, real_t a ) const
+    real_t White4D::getValue( real_t x, real_t y, real_t z, real_t a ) const
     {
         auto xr  = Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( x ) );
         auto yr  = Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( y ) );

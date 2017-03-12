@@ -182,8 +182,7 @@ namespace Noise
         VectorN<N> operator/( real_t n ) const
         {
             VectorN copy = *this;
-            copy       /= n;
-        
+         
             return copy;
         }
 
