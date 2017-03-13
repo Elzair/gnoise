@@ -8,14 +8,110 @@
 
 namespace Noise
 { 
+    class Billow1D : public Module1D
+    {
+    public:
+
+        Billow1D( Module1D& source,
+                  uint32_t  numOctaves  = 6,
+                  real_t    lacunarity  = 2.0,
+                  real_t    persistence = 0.5 ) :
+            source( source ),
+            numOctaves( numOctaves ),
+            lacunarity( lacunarity ),
+            persistence( persistence )
+        {}
+        
+        virtual real_t getValue( real_t x ) const override;
+
+    private:
+
+        Module1D& source;
+        uint32_t  numOctaves;
+        real_t    lacunarity;
+        real_t    persistence;
+    };
+
+    class Billow2D : public Module2D
+    {
+    public:
+
+        Billow2D( Module2D& source,
+                  uint32_t  numOctaves  = 6,
+                  real_t    lacunarity  = 2.0,
+                  real_t    persistence = 0.5 ) :
+            source( source ),
+            numOctaves( numOctaves ),
+            lacunarity( lacunarity ),
+            persistence( persistence )
+        {}
+        
+        virtual real_t getValue( real_t x, real_t y ) const override;
+
+    private:
+
+        Module2D& source;
+        uint32_t  numOctaves;
+        real_t    lacunarity;
+        real_t    persistence;
+    };
+
+    class Billow3D : public Module3D
+    {
+    public:
+
+        Billow3D( Module3D& source,
+                  uint32_t  numOctaves  = 6,
+                  real_t    lacunarity  = 2.0,
+                  real_t    persistence = 0.5 ) :
+            source( source ),
+            numOctaves( numOctaves ),
+            lacunarity( lacunarity ),
+            persistence( persistence )
+        {}
+        
+        virtual real_t getValue( real_t x, real_t y, real_t z ) const override;
+
+    private:
+
+        Module3D& source;
+        uint32_t  numOctaves;
+        real_t    lacunarity;
+        real_t    persistence;
+    };
+
+    class Billow4D : public Module4D
+    {
+    public:
+
+        Billow4D( Module4D& source,
+                  uint32_t  numOctaves  = 6,
+                  real_t    lacunarity  = 2.0,
+                  real_t    persistence = 0.5 ) :
+            source( source ),
+            numOctaves( numOctaves ),
+            lacunarity( lacunarity ),
+            persistence( persistence )
+        {}
+        
+        virtual real_t getValue( real_t x, real_t y, real_t z, real_t w ) const override;
+
+    private:
+
+        Module4D& source;
+        uint32_t  numOctaves;
+        real_t    lacunarity;
+        real_t    persistence;
+    };
+
     class Fractal1D : public Module1D
     {
     public:
 
         Fractal1D( Module1D& source,
                    uint32_t  numOctaves  = 6,
-                   real_t    lacunarity  = 1.5,
-                   real_t    persistence = .75 ) :
+                   real_t    lacunarity  = 2.0,
+                   real_t    persistence = 0.5 ) :
             source( source ),
             numOctaves( numOctaves ),
             lacunarity( lacunarity ),
@@ -38,8 +134,8 @@ namespace Noise
 
         Fractal2D( Module2D& source,
                    uint32_t  numOctaves  = 6,
-                   real_t    lacunarity  = 1.5,
-                   real_t    persistence = .75 ) :
+                   real_t    lacunarity  = 2.0,
+                   real_t    persistence = 0.5 ) :
             source( source ),
             numOctaves( numOctaves ),
             lacunarity( lacunarity ),
@@ -62,8 +158,8 @@ namespace Noise
 
         Fractal3D( Module3D& source,
                    uint32_t  numOctaves  = 6,
-                   real_t    lacunarity  = 1.5,
-                   real_t    persistence = .75 ) :
+                   real_t    lacunarity  = 2.0,
+                   real_t    persistence = 0.5 ) :
             source( source ),
             numOctaves( numOctaves ),
             lacunarity( lacunarity ),
@@ -86,15 +182,111 @@ namespace Noise
 
         Fractal4D( Module4D& source,
                    uint32_t  numOctaves  = 6,
-                   real_t    lacunarity  = 1.5,
-                   real_t    persistence = .75 ) :
+                   real_t    lacunarity  = 2.0,
+                   real_t    persistence = 0.5 ) :
             source( source ),
             numOctaves( numOctaves ),
             lacunarity( lacunarity ),
             persistence( persistence )
         {}
         
-        virtual real_t getValue( real_t x, real_t y, real_t z, real_t a ) const override;
+        virtual real_t getValue( real_t x, real_t y, real_t z, real_t w ) const override;
+
+    private:
+
+        Module4D& source;
+        uint32_t  numOctaves;
+        real_t    lacunarity;
+        real_t    persistence;
+    };
+
+    class MultiFractal1D : public Module1D
+    {
+    public:
+
+        MultiFractal1D( Module1D& source,
+                   uint32_t  numOctaves  = 6,
+                   real_t    lacunarity  = 2.0,
+                   real_t    persistence = 0.5 ) :
+            source( source ),
+            numOctaves( numOctaves ),
+            lacunarity( lacunarity ),
+            persistence( persistence )
+        {}
+        
+        virtual real_t getValue( real_t x ) const override;
+
+    private:
+
+        Module1D& source;
+        uint32_t  numOctaves;
+        real_t    lacunarity;
+        real_t    persistence;
+    };
+
+    class MultiFractal2D : public Module2D
+    {
+    public:
+
+        MultiFractal2D( Module2D& source,
+                   uint32_t  numOctaves  = 6,
+                   real_t    lacunarity  = 2.0,
+                   real_t    persistence = 0.5 ) :
+            source( source ),
+            numOctaves( numOctaves ),
+            lacunarity( lacunarity ),
+            persistence( persistence )
+        {}
+        
+        virtual real_t getValue( real_t x, real_t y ) const override;
+
+    private:
+
+        Module2D& source;
+        uint32_t  numOctaves;
+        real_t    lacunarity;
+        real_t    persistence;
+    };
+
+    class MultiFractal3D : public Module3D
+    {
+    public:
+
+        MultiFractal3D( Module3D& source,
+                   uint32_t  numOctaves  = 6,
+                   real_t    lacunarity  = 2.0,
+                   real_t    persistence = 0.5 ) :
+            source( source ),
+            numOctaves( numOctaves ),
+            lacunarity( lacunarity ),
+            persistence( persistence )
+        {}
+        
+        virtual real_t getValue( real_t x, real_t y, real_t z ) const override;
+
+    private:
+
+        Module3D& source;
+        uint32_t  numOctaves;
+        real_t    lacunarity;
+        real_t    persistence;
+    };
+
+    class MultiFractal4D : public Module4D
+    {
+    public:
+
+        MultiFractal4D( Module4D& source,
+                   uint32_t  numOctaves  = 6,
+                   real_t    lacunarity  = 2.0,
+                   real_t    persistence = 0.5 ) :
+            source( source ),
+            numOctaves( numOctaves ),
+            lacunarity( lacunarity ),
+            persistence( persistence )
+        {}
+        
+        virtual real_t getValue( real_t x, real_t y, real_t z, real_t w ) const override;
 
     private:
 
@@ -213,7 +405,7 @@ namespace Noise
             gain( gain )
         {}      
 
-        virtual real_t getValue( real_t x, real_t y, real_t z, real_t a ) const override;
+        virtual real_t getValue( real_t x, real_t y, real_t z, real_t w ) const override;
 
     private:
 

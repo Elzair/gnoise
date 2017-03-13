@@ -5,6 +5,82 @@
 namespace Noise
 { 
     /*
+     * Billow Module Methods
+     */
+    
+    real_t Billow1D::getValue( real_t x ) const
+    {
+        real_t frequency = 1.0;
+        real_t amplitude = 1.0;
+        real_t res       = 0.0;
+
+        for ( auto i = 0; i < this->numOctaves; i++ )
+        {
+            auto val = 2.0 * std::abs( this->source.getValue( x ) ) - 1.0;
+
+            res       += val * amplitude;
+            frequency *= this->lacunarity;
+            amplitude *= this->persistence;
+        }
+
+        return res;
+    }
+
+    real_t Billow2D::getValue( real_t x, real_t y ) const
+    {
+        real_t frequency = 1.0;
+        real_t amplitude = 1.0;
+        real_t res       = 0.0;
+
+        for ( auto i = 0; i < this->numOctaves; i++ )
+        {
+            auto val = 2.0 * std::abs( this->source.getValue( x, y ) ) - 1.0;
+
+            res       += val * amplitude;
+            frequency *= this->lacunarity;
+            amplitude *= this->persistence;
+        }
+
+        return res;
+    }
+
+    real_t Billow3D::getValue( real_t x, real_t y, real_t z ) const
+    {
+        real_t frequency = 1.0;
+        real_t amplitude = 1.0;
+        real_t res       = 0.0;
+
+        for ( auto i = 0; i < this->numOctaves; i++ )
+        {
+            auto val = 2.0 * std::abs( this->source.getValue( x, y, z ) ) - 1.0;
+
+            res       += val * amplitude;
+            frequency *= this->lacunarity;
+            amplitude *= this->persistence;
+        }
+
+        return res;
+    }
+
+    real_t Billow4D::getValue( real_t x, real_t y, real_t z, real_t w ) const
+    {
+        real_t frequency = 1.0;
+        real_t amplitude = 1.0;
+        real_t res       = 0.0;
+
+        for ( auto i = 0; i < this->numOctaves; i++ )
+        {
+            auto val = 2.0 * std::abs( this->source.getValue( x, y, z, w ) ) - 1.0;
+
+            res       += val * amplitude;
+            frequency *= this->lacunarity;
+            amplitude *= this->persistence;
+        }
+
+        return res;
+    }
+
+    /*
      * Fractal Module Methods
      */
     
@@ -85,6 +161,92 @@ namespace Noise
 
         return res;
     }
+
+    /*
+     * MultiFractal Module Methods
+     */
+    
+    real_t MultiFractal1D::getValue( real_t x ) const
+    {
+        real_t frequency = 1.0;
+        real_t amplitude = 1.0;
+        real_t res       = 0.0;
+
+        for ( auto i = 0; i < this->numOctaves; i++ )
+        {
+            auto val = this->source.getValue( x * frequency );
+
+            res       += val * amplitude * res;
+            frequency *= this->lacunarity;
+            amplitude *= this->persistence;
+        }
+
+        return res;
+    }
+
+    real_t MultiFractal2D::getValue( real_t x, real_t y ) const
+    {
+        real_t frequency = 1.0;
+        real_t amplitude = 1.0;
+        real_t res       = 0.0;
+
+        for ( auto i = 0; i < this->numOctaves; i++ )
+        {
+            auto val = this->source.getValue( x * frequency,
+                                              y * frequency );
+
+            res       += val * amplitude * res;
+            frequency *= this->lacunarity;
+            amplitude *= this->persistence;
+        }
+
+        return res;
+    }
+
+    real_t MultiFractal3D::getValue( real_t x, real_t y, real_t z ) const
+    {
+        real_t frequency = 1.0;
+        real_t amplitude = 1.0;
+        real_t res       = 0.0;
+
+        for ( auto i = 0; i < this->numOctaves; i++ )
+        {
+            auto val = this->source.getValue( x * frequency,
+                                              y * frequency,
+                                              z * frequency );
+
+            res       *= val * amplitude * res;
+            frequency *= this->lacunarity;
+            amplitude *= this->persistence;
+        }
+
+        return res;
+    }
+
+    real_t MultiFractal4D::getValue( real_t x, real_t y, real_t z, real_t a ) const
+    {
+        real_t frequency = 1.0;
+        real_t amplitude = 1.0;
+        real_t res       = 0.0;
+
+        for ( auto i = 0; i < this->numOctaves; i++ )
+        {
+            auto val = this->source.getValue( x * frequency,
+                                              y * frequency,
+                                              z * frequency,
+                                              a * frequency );
+
+            res       *= val * amplitude * res;
+            frequency *= this->lacunarity;
+            amplitude *= this->persistence;
+        }
+
+        return res;
+    }
+    
+    /*
+     * RidgedMultiFractal Module Methods
+     */
 
     real_t RidgedMultiFractal1D::getValue( real_t x ) const
     {

@@ -78,5 +78,37 @@ namespace Noise
         {
             return a + t * ( b - a );
         }
+
+        void InsertionSort( Vector<real_t>& vec )
+        {
+            for ( auto i = 1; i < vec.size(); i++ )
+            {
+                auto x = vec[i];
+                auto j = 0;
+                
+                while( ( j >= 0 ) && ( vec[j-1] > vec[j] ) )
+                {
+                    auto tmp = vec[j];
+                    vec[j]   = vec[j-1];
+                    vec[j-1] = tmp;
+                }
+                
+                vec[j+1] = x;
+            }
+        }
+
+        int64_t Wrap( int64_t val, int64_t low, int64_t high )
+        {
+            auto range = high - low + 1;
+
+            if ( val < low )
+            {
+                val += range * ( ( low - val ) / range + 1);
+            }
+
+            auto res = low + ( val - low ) % range;
+
+            return res;
+        }
     }
 }

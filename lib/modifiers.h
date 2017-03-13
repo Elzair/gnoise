@@ -3,6 +3,7 @@
 #pragma once
 
 #include "module.h"
+#include "util.h"
 
 namespace Noise
 { 
@@ -14,7 +15,7 @@ namespace Noise
             source( source )
         {}
         
-        virtual real_t getValue( real_t x )                               const override;
+        virtual real_t getValue( real_t x ) const override;
 
     private:
 
@@ -29,7 +30,7 @@ namespace Noise
             source( source )
         {}
         
-        virtual real_t getValue( real_t x, real_t y )                     const override;
+        virtual real_t getValue( real_t x, real_t y ) const override;
 
     private:
 
@@ -44,7 +45,7 @@ namespace Noise
             source( source )
         {}
         
-        virtual real_t getValue( real_t x, real_t y, real_t z )           const override;
+        virtual real_t getValue( real_t x, real_t y, real_t z ) const override;
 
     private:
 
@@ -75,7 +76,7 @@ namespace Noise
             bias( bias )
         {}
         
-        virtual real_t getValue( real_t x )                               const override;
+        virtual real_t getValue( real_t x ) const override;
 
     private:
 
@@ -92,7 +93,7 @@ namespace Noise
             bias( bias )
         {}
         
-        virtual real_t getValue( real_t x, real_t y )                     const override;
+        virtual real_t getValue( real_t x, real_t y ) const override;
 
     private:
 
@@ -109,7 +110,7 @@ namespace Noise
             bias( bias )
         {}
         
-        virtual real_t getValue( real_t x, real_t y, real_t z )           const override;
+        virtual real_t getValue( real_t x, real_t y, real_t z ) const override;
 
     private:
 
@@ -134,66 +135,6 @@ namespace Noise
         real_t    bias;
     };
 
-    class Billow1D : public Module1D
-    {
-    public:
-
-        Billow1D( Module1D& source ) :
-            source( source )
-        {}
-        
-        virtual real_t getValue( real_t x )                               const override;
-
-    private:
-
-        Module1D& source;
-    };
-
-    class Billow2D : public Module2D
-    {
-    public:
-
-        Billow2D( Module2D& source ) :
-            source( source )
-        {}
-        
-        virtual real_t getValue( real_t x, real_t y )                     const override;
-
-    private:
-
-        Module2D& source;
-    };
-
-    class Billow3D : public Module3D
-    {
-    public:
-
-        Billow3D( Module3D& source ) :
-            source( source )
-        {}
-        
-        virtual real_t getValue( real_t x, real_t y, real_t z )           const override;
-
-    private:
-
-        Module3D& source;
-    };
-
-    class Billow4D : public Module4D
-    {
-    public:
-
-        Billow4D( Module4D& source ) :
-            source( source )
-        {}
-        
-        virtual real_t getValue( real_t x, real_t y, real_t z, real_t w ) const override;
-
-    private:
-
-        Module4D& source;
-    };
-
     class Clamp1D : public Module1D
     {
     public:
@@ -206,13 +147,13 @@ namespace Noise
             max( max )
         {}
         
-        virtual real_t getValue( real_t x )                               const override;
+        virtual real_t getValue( real_t x ) const override;
 
     private:
 
         Module1D& source;
-        real_t  min;
-        real_t  max;
+        real_t    min;
+        real_t    max;
     };
     
     class Clamp2D : public Module2D
@@ -227,13 +168,13 @@ namespace Noise
             max( max )
         {}
         
-        virtual real_t getValue( real_t x, real_t y )                     const override;
+        virtual real_t getValue( real_t x, real_t y ) const override;
 
     private:
 
         Module2D& source;
-        real_t  min;
-        real_t  max;
+        real_t    min;
+        real_t    max;
     };
 
     class Clamp3D : public Module3D
@@ -248,7 +189,7 @@ namespace Noise
             max( max )
         {}
         
-        virtual real_t getValue( real_t x, real_t y, real_t z )           const override;
+        virtual real_t getValue( real_t x, real_t y, real_t z ) const override;
 
     private:
 
@@ -286,7 +227,7 @@ namespace Noise
             source( source )
         {}
         
-        virtual real_t getValue( real_t x )                               const override;
+        virtual real_t getValue( real_t x ) const override;
 
     private:
 
@@ -301,7 +242,7 @@ namespace Noise
             source( source )
         {}
         
-        virtual real_t getValue( real_t x, real_t y )                     const override;
+        virtual real_t getValue( real_t x, real_t y ) const override;
 
     private:
 
@@ -316,7 +257,7 @@ namespace Noise
             source( source )
         {}
         
-        virtual real_t getValue( real_t x, real_t y, real_t z )           const override;
+        virtual real_t getValue( real_t x, real_t y, real_t z ) const override;
 
     private:
 
@@ -347,7 +288,7 @@ namespace Noise
             multiple( multiple )
         {}
         
-        virtual real_t getValue( real_t x )                               const override;
+        virtual real_t getValue( real_t x ) const override;
 
     private:
 
@@ -364,7 +305,7 @@ namespace Noise
             multiple( multiple )
         {}
         
-        virtual real_t getValue( real_t x, real_t y )                     const override;
+        virtual real_t getValue( real_t x, real_t y ) const override;
 
     private:
 
@@ -381,7 +322,7 @@ namespace Noise
             multiple( multiple )
         {}
         
-        virtual real_t getValue( real_t x, real_t y, real_t z )           const override;
+        virtual real_t getValue( real_t x, real_t y, real_t z ) const override;
 
     private:
 
@@ -404,5 +345,97 @@ namespace Noise
 
         Module4D& source;
         real_t    multiple;
+    };
+
+    class Terrace1D : public Module1D
+    {
+    public:
+
+        Terrace1D( Module1D&      source,
+                   Vector<real_t> controlPoints,
+                   bool           invert = false ) :
+            source( source ),
+            controlPoints( controlPoints ),
+            invert( invert )
+        {
+            Noise::Util::InsertionSort( this->controlPoints );
+        }
+        
+        virtual real_t getValue( real_t x ) const override;
+
+    private:
+
+        Module1D&      source;
+        Vector<real_t> controlPoints;
+        bool           invert;
+    };
+
+    class Terrace2D : public Module2D
+    {
+    public:
+
+        Terrace2D( Module2D&      source,
+                   Vector<real_t> controlPoints,
+                   bool           invert = false ) :
+            source( source ),
+            controlPoints( controlPoints ),
+            invert( invert )
+        {
+            Noise::Util::InsertionSort( this->controlPoints );
+        }
+        
+        virtual real_t getValue( real_t x, real_t y ) const override;
+
+    private:
+
+        Module2D&      source;
+        Vector<real_t> controlPoints;
+        bool           invert;
+    };
+
+    class Terrace3D : public Module3D
+    {
+    public:
+
+        Terrace3D( Module3D&      source,
+                   Vector<real_t> controlPoints,
+                   bool           invert = false ) :
+            source( source ),
+            controlPoints( controlPoints ),
+            invert( invert )
+        {
+            Noise::Util::InsertionSort( this->controlPoints );
+        }
+        
+        virtual real_t getValue( real_t x, real_t y, real_t z ) const override;
+
+    private:
+
+        Module3D&      source;
+        Vector<real_t> controlPoints;
+        bool           invert;
+    };
+
+    class Terrace4D : public Module4D
+    {
+    public:
+
+        Terrace4D( Module4D&      source,
+                   Vector<real_t> controlPoints,
+                   bool           invert = false ) :
+            source( source ),
+            controlPoints( controlPoints ),
+            invert( invert )
+        {
+            Noise::Util::InsertionSort( this->controlPoints );
+        }
+        
+        virtual real_t getValue( real_t x, real_t y, real_t z, real_t w ) const override;
+
+    private:
+
+        Module4D&      source;
+        Vector<real_t> controlPoints;
+        bool           invert;
     };
 }

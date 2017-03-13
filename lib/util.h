@@ -27,5 +27,9 @@ namespace Noise
         real_t Quintic( real_t t );
 
         real_t Lerp( real_t t, real_t a, real_t b );
+
+        void InsertionSort( Vector<real_t>& vec );
+
+        int64_t Wrap( int64_t val, int64_t low, int64_t high );
     }
 }
