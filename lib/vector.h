@@ -208,23 +208,9 @@ namespace Noise
 
         real_t getLength() const
         {
-            real_t len = sqrt( this->getLengthSq() );
+            real_t len = sqrt( this->dot() );
 
             return len;
-        }
-
-    private:
-
-        inline real_t getLengthSq() const
-        {
-            real_t lensq = 0.0;
-
-            for ( auto& val : this->vals )
-            {
-                lensq += val * val;
-            }
-
-            return lensq;
         }
     };
 }
