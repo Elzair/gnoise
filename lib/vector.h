@@ -17,7 +17,7 @@ namespace Noise
     {
     public:
 
-        std::array<real_t, N> vals;
+        real_t vals[N];
 
         VectorN<N>& operator+=( const VectorN<N>& v )
         {
@@ -115,12 +115,12 @@ namespace Noise
 
         real_t& operator[]( std::size_t idx )
         {
-            return this->vals[ idx ];
+            return this->vals[idx];
         }
 
         const real_t& operator[]( std::size_t idx ) const
         {
-            return this->vals[ idx ];
+            return this->vals[idx];
         }
 
         VectorN<N> operator+( const VectorN<N>& v ) const
@@ -196,13 +196,11 @@ namespace Noise
 
         real_t dot( const VectorN<N>& v ) const
         {
-            real_t dot_product;
+            real_t dot_product = 0.0;
 
             for ( auto i = 0; i < N; i++ )
             {
-                dot_product = std::fma( this->vals[i],
-                                        v[i],
-                                        dot_product );
+                dot_product += this->vals[i] * this->vals[i];
             }
 
             return dot_product;
@@ -219,13 +217,11 @@ namespace Noise
 
         inline real_t getLengthSq() const
         {
-            real_t lensq;
+            real_t lensq = 0.0;
 
             for ( auto& val : this->vals )
             {
-                lensq = std::fma( val,
-                                  val,
-                                  lensq );
+                lensq += val * val;
             }
 
             return lensq;
