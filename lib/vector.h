@@ -101,6 +101,16 @@ namespace Noise
             return *this;
         }
 
+        VectorN<N>& absnc()
+        {
+            for ( auto& val : this->vals )
+            {
+                val = std::abs( val );
+            }
+
+            return *this;
+        }
+
         VectorN<N>& normalize()
         {
             real_t norm_mul = 1.0 / this->getLength();
@@ -190,6 +200,14 @@ namespace Noise
         {
             VectorN copy = *this;
             copy.normalize();
+
+            return copy;
+        }
+
+        VectorN<N> abs() const
+        {
+            VectorN copy = *this;
+            copy.absnc();
 
             return copy;
         }

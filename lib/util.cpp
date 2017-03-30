@@ -17,6 +17,121 @@ namespace Noise
 
             return hash;
         }
+        uint64_t HashFNV1A( uint64_t x, uint64_t y )
+        {
+            const uint64_t prime = 1099511628211; // i.e. 2^40 + 2^8 + 179
+            uint64_t       hash  = 14695981039346656037;
+
+            for ( auto i = 0; i < sizeof( uint64_t ); i++ )
+            {
+                hash = ( hash ^ ( x & 0xff ) ) * prime;
+                x    = x >> 8;
+            }
+
+            for ( auto i = 0; i < sizeof( uint64_t ); i++ )
+            {
+                hash = ( hash ^ ( y & 0xff ) ) * prime;
+                y    = y >> 8;
+            }
+
+            return hash;
+        }
+
+        uint64_t HashFNV1A( uint64_t x, uint64_t y, uint64_t z )
+        {
+            const uint64_t prime = 1099511628211; // i.e. 2^40 + 2^8 + 179
+            uint64_t       hash  = 14695981039346656037;
+
+            for ( auto i = 0; i < sizeof( uint64_t ); i++ )
+            {
+                hash = ( hash ^ ( x & 0xff ) ) * prime;
+                x    = x >> 8;
+            }
+
+            for ( auto i = 0; i < sizeof( uint64_t ); i++ )
+            {
+                hash = ( hash ^ ( y & 0xff ) ) * prime;
+                y    = y >> 8;
+            }
+
+            for ( auto i = 0; i < sizeof( uint64_t ); i++ )
+            {
+                hash = ( hash ^ ( z & 0xff ) ) * prime;
+                z    = z >> 8;
+            }
+
+            return hash;
+        }
+
+        uint64_t HashFNV1A( uint64_t x, uint64_t y, uint64_t z, uint64_t w )
+        {
+            const uint64_t prime = 1099511628211; // i.e. 2^40 + 2^8 + 179
+            uint64_t       hash  = 14695981039346656037;
+
+            for ( auto i = 0; i < sizeof( uint64_t ); i++ )
+            {
+                hash = ( hash ^ ( x & 0xff ) ) * prime;
+                x    = x >> 8;
+            }
+
+            for ( auto i = 0; i < sizeof( uint64_t ); i++ )
+            {
+                hash = ( hash ^ ( y & 0xff ) ) * prime;
+                y    = y >> 8;
+            }
+
+            for ( auto i = 0; i < sizeof( uint64_t ); i++ )
+            {
+                hash = ( hash ^ ( z & 0xff ) ) * prime;
+                z    = z >> 8;
+            }
+
+            for ( auto i = 0; i < sizeof( uint64_t ); i++ )
+            {
+                hash = ( hash ^ ( w & 0xff ) ) * prime;
+                w    = w >> 8;
+            }
+
+            return hash;
+        }
+
+        uint64_t HashFNV1A( uint64_t x, uint64_t y, uint64_t z, uint64_t w, uint64_t s )
+        {
+            const uint64_t prime = 1099511628211; // i.e. 2^40 + 2^8 + 179
+            uint64_t       hash  = 14695981039346656037;
+
+            for ( auto i = 0; i < sizeof( uint64_t ); i++ )
+            {
+                hash = ( hash ^ ( x & 0xff ) ) * prime;
+                x    = x >> 8;
+            }
+
+            for ( auto i = 0; i < sizeof( uint64_t ); i++ )
+            {
+                hash = ( hash ^ ( y & 0xff ) ) * prime;
+                y    = y >> 8;
+            }
+
+            for ( auto i = 0; i < sizeof( uint64_t ); i++ )
+            {
+                hash = ( hash ^ ( z & 0xff ) ) * prime;
+                z    = z >> 8;
+            }
+
+            for ( auto i = 0; i < sizeof( uint64_t ); i++ )
+            {
+                hash = ( hash ^ ( w & 0xff ) ) * prime;
+                w    = w >> 8;
+            }
+
+            for ( auto i = 0; i < sizeof( uint64_t ); i++ )
+            {
+                hash = ( hash ^ ( s & 0xff ) ) * prime;
+                s    = s >> 8;
+            }
+
+            return hash;
+        }
 
         uint64_t XORShift128Plus( uint64_t& s0, uint64_t& s1 )
         {
@@ -45,6 +160,18 @@ namespace Noise
             return res;
         }
 
+        // This function normalizes a 64-bit unsigned integer between 0.0 and 1.0.
+        real_t Normalize2U64( uint64_t x )
+        {
+            constexpr real_t invMaxU64 = 1.0 / static_cast<real_t>( std::numeric_limits<uint64_t>::max() );
+
+            // Divide the number by  the maximum uint64_t.
+            real_t res = x * invMaxU64;
+            // Current Range: 0.0 ... 1.0
+
+            return res;
+        }
+
         uint64_t MakeRealU64Range( real_t x )
         {
             real_t low  = static_cast<real_t>( std::numeric_limits<int64_t>::min() );
@@ -65,6 +192,15 @@ namespace Noise
 
             // Finally, convert number to uint64_t.
             uint64_t res = static_cast<uint64_t>( val );
+
+            return res;
+        }
+        
+        uint64_t MakeNormRealU64Range( real_t x )
+        {
+            // Assume x is between 0.0 and 1.0.
+            auto newx = x * static_cast<real_t>( std::numeric_limits<uint64_t>::max() );
+            auto res  = static_cast<uint64_t>( newx );
 
             return res;
         }
@@ -97,6 +233,27 @@ namespace Noise
             }
         }
 
+        void InsertAndSort( real_t* arr, std::size_t n, real_t val )
+        {
+            real_t tmp = 0.0;
+
+            for ( int i = n-1; i >= 0; i-- )
+            {
+                if ( val > arr[i] )
+                {
+                    break;
+                }
+
+                tmp    = arr[i];
+                arr[i] = val;
+
+                if ( i + 1 < n )
+                {
+                    arr[i+1] = tmp;
+                }
+            }
+        }
+
         int64_t Wrap( int64_t val, int64_t low, int64_t high )
         {
             auto range = high - low + 1;
@@ -109,6 +266,27 @@ namespace Noise
             auto res = low + ( val - low ) % range;
 
             return res;
+        }
+
+        uint64_t Factorial( uint64_t x )
+        {
+            auto res = 1;
+
+            for ( auto i = 1; i <= x; i++ )
+            {
+                res *= i;
+            }
+
+            return res;
+        }
+
+        uint64_t I64ToU64( int64_t x )
+        {
+            uint64_t ux = x;
+            ux += std::numeric_limits<int64_t>::max();
+            ux += 1;
+
+            return ux;
         }
     }
 }
