@@ -12,14 +12,18 @@ namespace Noise
     {
     public:
 
-        Value1D( uint64_t seed = 0 ) : seed( seed )
+        Value1D( uint64_t seed         = 0,
+                 Interp   interpMethod = Interp::Smoother ) :
+            seed( seed ),
+            interpMethod( interpMethod )
         {}
         
         virtual real_t getValue( real_t x )                               const override;
 
     private:
 
-        uint64_t seed = 0;
+        uint64_t seed;
+        Interp   interpMethod;
 
         static const uint64_t X_NOISE_PRIME    = 6343;
         static const uint64_t SEED_NOISE_PRIME = 39479;
@@ -31,14 +35,18 @@ namespace Noise
     {
     public:
 
-        Value2D( uint64_t seed = 0 ) : seed( seed )
+        Value2D( uint64_t seed         = 0,
+                 Interp   interpMethod = Interp::Smoother ) :
+            seed( seed ),
+            interpMethod( interpMethod )
         {}
         
         virtual real_t getValue( real_t x, real_t y )                     const override;
 
     private:
 
-        uint64_t seed = 0;
+        uint64_t seed;
+        Interp   interpMethod;
 
         static const uint64_t X_NOISE_PRIME    = 6343;
         static const uint64_t Y_NOISE_PRIME    = 31337;
@@ -52,14 +60,18 @@ namespace Noise
     {
     public:
 
-        Value3D( uint64_t seed = 0 ) : seed( seed )
+        Value3D( uint64_t seed         = 0,
+                 Interp   interpMethod = Interp::Smoother ) :
+            seed( seed ),
+            interpMethod( interpMethod )
         {}
         
         virtual real_t getValue( real_t x, real_t y, real_t z )           const override;
 
     private:
 
-        uint64_t seed = 0;
+        uint64_t seed;
+        Interp   interpMethod;
 
         static const uint64_t X_NOISE_PRIME    = 6343;
         static const uint64_t Y_NOISE_PRIME    = 31337;
@@ -75,14 +87,18 @@ namespace Noise
     {
     public:
 
-        Value4D( uint64_t seed = 0 ) : seed( seed )
+        Value4D( uint64_t seed         = 0,
+                 Interp   interpMethod = Interp::Smoother) :
+            seed( seed ),
+            interpMethod( interpMethod )
         {}
 
         virtual real_t getValue( real_t x, real_t y, real_t z, real_t w ) const override;
 
     private:
 
-        uint64_t seed = 0;
+        uint64_t seed;
+        Interp   interpMethod;
 
         static const uint64_t X_NOISE_PRIME    = 6343;
         static const uint64_t Y_NOISE_PRIME    = 31337;

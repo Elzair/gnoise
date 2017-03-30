@@ -15,7 +15,17 @@ namespace Noise
         auto c0 = this->getGridValue( xi );
         auto c1 = this->getGridValue( xi+1 );
 
-        auto u = Util::Quintic( tx );
+        real_t u;
+        
+        switch( this->interpMethod )
+        {
+        case Interp::Smooth:
+            u = Util::Interpolation::SmoothStep( tx );
+            break;
+        case Interp::Smoother:
+            u = Util::Interpolation::SmootherStep( tx );
+            break;
+        }
 
         auto res = Util::Lerp( u, c0, c1 );
 
@@ -56,8 +66,19 @@ namespace Noise
         auto c10 = this->getGridValue( xi+1, yi );
         auto c11 = this->getGridValue( xi+1, yi+1 );
 
-        auto u = Util::Quintic( tx );
-        auto v = Util::Quintic( ty );
+        real_t u, v;
+        
+        switch( this->interpMethod )
+        {
+        case Interp::Smooth:
+            u = Util::Interpolation::SmoothStep( tx );
+            v = Util::Interpolation::SmoothStep( ty );
+            break;
+        case Interp::Smoother:
+            u = Util::Interpolation::SmootherStep( tx );
+            v = Util::Interpolation::SmootherStep( ty );
+            break;
+        }
 
         auto res = Util::Lerp( v,
                          Util::Lerp( u, c00, c10 ),
@@ -108,11 +129,23 @@ namespace Noise
         auto c110 = this->getGridValue( xi+1, yi+1, zi );
         auto c111 = this->getGridValue( xi+1, yi+1, zi+1 );
 
-        auto u = Util::Quintic( tx );
-        auto v = Util::Quintic( ty );
-        auto w = Util::Quintic( tz );
+        real_t u, v, s;
+        
+        switch( this->interpMethod )
+        {
+        case Interp::Smooth:
+            u = Util::Interpolation::SmoothStep( tx );
+            v = Util::Interpolation::SmoothStep( ty );
+            s = Util::Interpolation::SmoothStep( tz );
+            break;
+        case Interp::Smoother:
+            u = Util::Interpolation::SmootherStep( tx );
+            v = Util::Interpolation::SmootherStep( ty );
+            s = Util::Interpolation::SmootherStep( tz );
+            break;
+        }
 
-        auto res = Util::Lerp( w,
+        auto res = Util::Lerp( s,
                          Util::Lerp( v,
                                Util::Lerp( u, c000, c100 ),
                                Util::Lerp( u, c010, c110 ) ),
@@ -177,10 +210,23 @@ namespace Noise
         auto c1110 = this->getGridValue( xi+1, yi+1, zi+1, wi );
         auto c1111 = this->getGridValue( xi+1, yi+1, zi+1, wi+1 );
 
-        auto u = Util::Quintic( tx );
-        auto v = Util::Quintic( ty );
-        auto s = Util::Quintic( tz );
-        auto t = Util::Quintic( tw );
+        real_t u, v, s, t;
+        
+        switch( this->interpMethod )
+        {
+        case Interp::Smooth:
+            u = Util::Interpolation::SmoothStep( tx );
+            v = Util::Interpolation::SmoothStep( ty );
+            s = Util::Interpolation::SmoothStep( tz );
+            t = Util::Interpolation::SmoothStep( tw );
+            break;
+        case Interp::Smoother:
+            u = Util::Interpolation::SmootherStep( tx );
+            v = Util::Interpolation::SmootherStep( ty );
+            s = Util::Interpolation::SmootherStep( tz );
+            t = Util::Interpolation::SmootherStep( tw );
+            break;
+        }
 
         auto res = Util::Lerp( t,
                          Util::Lerp( s,

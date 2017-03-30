@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "standalone_defs.h"
+#include "noise.h"
 
 namespace Noise
 {

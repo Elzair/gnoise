@@ -14,11 +14,11 @@ namespace Noise
     
     real_t Worley1D::getValue( real_t x ) const
     {
-        real_t distances[Worley1D::DISTANCES_SIZE];
+        std::array<real_t, Worley1D::DISTANCES_SIZE> distances;
 
-        for ( auto i = 0; i < Worley1D::DISTANCES_SIZE; i++ )
+        for ( auto& distance : distances )
         {
-            distances[i] = 1.0e12; // Initialize distances to large value.
+            distance = 1.0e12; // Initialize distances to large value.
         }
 
         // Determine the unit location of point.
@@ -31,34 +31,32 @@ namespace Noise
 
             // Generate reproducible random number
             auto xs0 = this->seed;
-            auto xs1 = Util::HashFNV1A( Util::I64ToU64( xc ) );
+            auto xs1 = Util::Hash( Util::I64ToU64( xc ) );
 
             // Determine # feature points in this cell.
-            auto numfp = this->lookupNumFeaturePoints( Util::XORShift128Plus( xs0,
-                                                                              xs1 ) );
+            auto numfp = this->lookupNumFeaturePoints( Util::RNG( xs0, xs1 ) );
 
             // Distribute feature points randomly around cell.
             for ( auto l = 0; l < numfp; l++ )
             {
-                real_t fp = xf + Util::Normalize2U64( Util::XORShift128Plus( xs0,
-                                                                             xs1 ) );
+                real_t fp = xf + Util::U64ToNormReal( Util::RNG( xs0, xs1 ) );
                 auto dist = 0.0;
 
-                if ( this->distcalc == Distance::Euclidian )
+                if ( this->distCalcMethod == Distance::Euclidian )
                 {
                     dist = ( x - fp ) * ( x - fp );
                 }
-                else if ( this->distcalc == Distance::Manhattan )
+                else if ( this->distCalcMethod == Distance::Manhattan )
                 {
                     dist = std::abs( x - fp );
                 }
-                else if ( this->distcalc == Distance::Chebyshev )
+                else if ( this->distCalcMethod == Distance::Chebyshev )
                 {
                     dist = std::abs( x - fp );
                 }
 
                 // Keep track of the N closest feature points to the point x.
-                Util::InsertAndSort( distances, Worley1D::DISTANCES_SIZE, dist );
+                Util::InsertAndSort( distances.data(), Worley1D::DISTANCES_SIZE, dist );
             }
         }
         

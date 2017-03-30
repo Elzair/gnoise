@@ -5,6 +5,8 @@
 #include <cstdint>
 #include <cmath>
 
+#include <array>
+
 #include "module.h"
 #include "util.h"
 
@@ -14,19 +16,12 @@ namespace Noise
     {
     public:
 
-        enum class Distance
-        {
-            Euclidian,
-            Manhattan,
-            Chebyshev
-        };
-
-        Worley1D( uint64_t seed       = 0,
-                  real_t   avgPerCell = 2.0,
-                  Distance distcalc   = Distance::Euclidian ) :
+        Worley1D( uint64_t seed           = 0,
+                  real_t   avgPerCell     = 2.0,
+                  Distance distCalcMethod = Distance::Euclidian ) :
             seed( seed ),
             avgPerCell( avgPerCell ),
-            distcalc( distcalc )
+            distCalcMethod( distCalcMethod )
         {
             // Use the Cumulative Distribution Function of the Poisson Distribution
             // to make a table on the odds of each cell having exactly n feature points.
@@ -34,14 +29,14 @@ namespace Noise
             real_t lambda = this->avgPerCell;
             real_t sum    = 0.0;
 
-            for ( auto k = 0; k < MAX_PER_CELL; k++ )
+            for ( auto k = 0; k < Worley1D::MAX_PER_CELL; k++ )
             {
                 sum += std::pow( lambda,
                                  static_cast<real_t>( k ) ) /
                                  static_cast<real_t>( Util::Factorial( k ) );
                 real_t prob = std::exp( -1.0 * lambda ) * sum;
 
-                this->probTable[k] = Util::MakeNormRealU64Range( prob );
+                this->probTable[k] = Util::NormRealToU64( prob );
             }
         }
         
@@ -54,9 +49,9 @@ namespace Noise
 
         uint64_t seed;
         real_t   avgPerCell;
-        Distance distcalc;
+        Distance distCalcMethod;
 
-        uint64_t probTable[MAX_PER_CELL];
+        std::array<uint64_t, Worley1D::MAX_PER_CELL> probTable;
 
         std::size_t lookupNumFeaturePoints( uint64_t num ) const;
     };

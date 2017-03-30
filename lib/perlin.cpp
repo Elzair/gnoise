@@ -6,34 +6,6 @@
 
 namespace Noise
 {
-    real_t Perlin1D::getValue( real_t x ) const
-    {
-        Noise::VectorN<1> P  = { x };
-        Noise::VectorN<1> Pf = { std::floor( x ) };
-        
-        auto c0 = this->getGridValue( P, Pf );
-        auto c1 = this->getGridValue( P, Pf + Noise::VectorN<1>{1.0} );
-
-        auto u = Util::Quintic( P[0] - Pf[0] );
-
-        auto res = Util::Lerp( u, c0, c1 );
-
-        return res;
-    }
-
-    real_t Perlin1D::getGridValue( const Noise::VectorN<1>& pos,
-                                   const Noise::VectorN<1>& gridpos ) const
-    {
-        Noise::VectorN<1> gradient {
-            Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[0] ) ) )
-        };
-        gradient.normalize();
-
-        auto res = gradient.dot( pos - gridpos );
-
-        return res;
-    }
-
     real_t Perlin2D::getValue( real_t x, real_t y ) const
     {
         Noise::VectorN<2> P  = { x, y };
@@ -45,8 +17,19 @@ namespace Noise
         auto c10 = this->getGridValue( P, Pf + Noise::VectorN<2>{1.0, 0.0} );
         auto c11 = this->getGridValue( P, Pf + Noise::VectorN<2>{1.0, 1.0} );
 
-        auto u = Util::Quintic( P[0] - Pf[0] );
-        auto v = Util::Quintic( P[1] - Pf[1] );
+        real_t u, v;
+        
+        switch( this->interpMethod )
+        {
+        case Interp::Smooth:
+            u = Util::Interpolation::SmoothStep( P[0] - Pf[0] );
+            v = Util::Interpolation::SmoothStep( P[1] - Pf[1] );
+            break;
+        case Interp::Smoother:
+            u = Util::Interpolation::SmootherStep( P[0] - Pf[0] );
+            v = Util::Interpolation::SmootherStep( P[1] - Pf[1] );
+            break;
+        }
 
         auto res = Util::Lerp( v,
                          Util::Lerp( u, c00, c10 ),
@@ -59,8 +42,8 @@ namespace Noise
                                    const Noise::VectorN<2>& gridpos ) const
     {
         Noise::VectorN<2> gradient {
-            Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[0] ) ) ),
-            Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[1] ) ) )
+            Util::U64ToReal( Util::Hash( this->seed, Util::RealToU64( gridpos[0] ) ) ),
+            Util::U64ToReal( Util::Hash( this->seed, Util::RealToU64( gridpos[1] ) ) )
         };
         gradient.normalize();
 
@@ -85,9 +68,21 @@ namespace Noise
         auto c110 = this->getGridValue( P, Pf + Noise::VectorN<3>{1.0, 1.0, 0.0} );
         auto c111 = this->getGridValue( P, Pf + Noise::VectorN<3>{1.0, 1.0, 1.0} );
 
-        auto u = Util::Quintic( P[0] - Pf[0] );
-        auto v = Util::Quintic( P[1] - Pf[1] );
-        auto s = Util::Quintic( P[2] - Pf[2] );
+        real_t u, v, s;
+        
+        switch( this->interpMethod )
+        {
+        case Interp::Smooth:
+            u = Util::Interpolation::SmoothStep( P[0] - Pf[0] );
+            v = Util::Interpolation::SmoothStep( P[1] - Pf[1] );
+            s = Util::Interpolation::SmoothStep( P[2] - Pf[2] );
+            break;
+        case Interp::Smoother:
+            u = Util::Interpolation::SmootherStep( P[0] - Pf[0] );
+            v = Util::Interpolation::SmootherStep( P[1] - Pf[1] );
+            s = Util::Interpolation::SmootherStep( P[2] - Pf[2] );
+            break;
+        }
 
         auto res = Util::Lerp( s,
                          Util::Lerp( v,
@@ -104,9 +99,9 @@ namespace Noise
                                    const Noise::VectorN<3>& gridpos ) const
     {
         Noise::VectorN<3> gradient {
-            Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[0] ) ) ),
-            Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[1] ) ) ),
-            Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[2] ) ) )
+            Util::U64ToReal( Util::Hash( this->seed, Util::RealToU64( gridpos[0] ) ) ),
+            Util::U64ToReal( Util::Hash( this->seed, Util::RealToU64( gridpos[1] ) ) ),
+            Util::U64ToReal( Util::Hash( this->seed, Util::RealToU64( gridpos[2] ) ) )
         };
         gradient.normalize();
 
@@ -140,10 +135,23 @@ namespace Noise
         auto c1110 = this->getGridValue( P, Pf + Noise::VectorN<4>{1.0, 1.0, 1.0, 0.0} );
         auto c1111 = this->getGridValue( P, Pf + Noise::VectorN<4>{1.0, 1.0, 1.0, 1.0} );
 
-        auto u = Util::Quintic( P[0] - Pf[0] );
-        auto v = Util::Quintic( P[1] - Pf[1] );
-        auto s = Util::Quintic( P[2] - Pf[2] );
-        auto t = Util::Quintic( P[3] - Pf[3] );
+        real_t u, v, s, t;
+        
+        switch( this->interpMethod )
+        {
+        case Interp::Smooth:
+            u = Util::Interpolation::SmoothStep( P[0] - Pf[0] );
+            v = Util::Interpolation::SmoothStep( P[1] - Pf[1] );
+            s = Util::Interpolation::SmoothStep( P[2] - Pf[2] );
+            t = Util::Interpolation::SmoothStep( P[3] - Pf[3] );
+            break;
+        case Interp::Smoother:
+            u = Util::Interpolation::SmootherStep( P[0] - Pf[0] );
+            v = Util::Interpolation::SmootherStep( P[1] - Pf[1] );
+            s = Util::Interpolation::SmootherStep( P[2] - Pf[2] );
+            t = Util::Interpolation::SmootherStep( P[3] - Pf[3] );
+            break;
+        }
 
         auto res = Util::Lerp( t,
                          Util::Lerp( s,
@@ -168,10 +176,10 @@ namespace Noise
                                    const Noise::VectorN<4>& gridpos ) const
     {
         Noise::VectorN<4> gradient {
-            Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[0] ) ) ),
-            Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[1] ) ) ),
-            Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[2] ) ) ),
-            Util::NormalizeU64( Util::HashFNV1A( this->seed ^ Util::MakeRealU64Range( gridpos[3] ) ) )
+            Util::U64ToReal( Util::Hash( this->seed, Util::RealToU64( gridpos[0] ) ) ),
+            Util::U64ToReal( Util::Hash( this->seed, Util::RealToU64( gridpos[1] ) ) ),
+            Util::U64ToReal( Util::Hash( this->seed, Util::RealToU64( gridpos[2] ) ) ),
+            Util::U64ToReal( Util::Hash( this->seed, Util::RealToU64( gridpos[3] ) ) )
         };
         gradient.normalize();
 
