@@ -144,6 +144,15 @@ namespace Noise
             return s1 + y;
         }
 
+        uint64_t I64ToU64( int64_t x )
+        {
+            uint64_t ux = x;
+            ux         += std::numeric_limits<int64_t>::max();
+            ux         += 1;
+
+            return ux;
+        }
+
         real_t U64ToReal( uint64_t x )
         {
             constexpr real_t invHalfMaxU64 = 2.0 / static_cast<real_t>( std::numeric_limits<uint64_t>::max() );
@@ -271,15 +280,6 @@ namespace Noise
             }
 
             return res;
-        }
-
-        uint64_t I64ToU64( int64_t x )
-        {
-            uint64_t ux = x;
-            ux += std::numeric_limits<int64_t>::max();
-            ux += 1;
-
-            return ux;
         }
 
         namespace Interpolation

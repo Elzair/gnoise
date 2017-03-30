@@ -351,9 +351,9 @@ namespace Noise
     {
     public:
 
-        Terrace1D( Module1D&      source,
-                   Vector<real_t> controlPoints,
-                   bool           invert = false ) :
+        Terrace1D( Module1D&             source,
+                   Noise::Vector<real_t> controlPoints,
+                   bool                  invert = false ) :
             source( source ),
             controlPoints( controlPoints ),
             invert( invert )
@@ -365,18 +365,18 @@ namespace Noise
 
     private:
 
-        Module1D&      source;
-        Vector<real_t> controlPoints;
-        bool           invert;
+        Module1D&             source;
+        Noise::Vector<real_t> controlPoints;
+        bool                  invert;
     };
 
     class Terrace2D : public Module2D
     {
     public:
 
-        Terrace2D( Module2D&      source,
-                   Vector<real_t> controlPoints,
-                   bool           invert = false ) :
+        Terrace2D( Module2D&             source,
+                   Noise::Vector<real_t> controlPoints,
+                   bool                  invert = false ) :
             source( source ),
             controlPoints( controlPoints ),
             invert( invert )
@@ -388,18 +388,18 @@ namespace Noise
 
     private:
 
-        Module2D&      source;
-        Vector<real_t> controlPoints;
-        bool           invert;
+        Module2D&             source;
+        Noise::Vector<real_t> controlPoints;
+        bool                  invert;
     };
 
     class Terrace3D : public Module3D
     {
     public:
 
-        Terrace3D( Module3D&      source,
-                   Vector<real_t> controlPoints,
-                   bool           invert = false ) :
+        Terrace3D( Module3D&             source,
+                   Noise::Vector<real_t> controlPoints,
+                   bool                  invert = false ) :
             source( source ),
             controlPoints( controlPoints ),
             invert( invert )
@@ -412,7 +412,7 @@ namespace Noise
     private:
 
         Module3D&      source;
-        Vector<real_t> controlPoints;
+        Noise::Vector<real_t> controlPoints;
         bool           invert;
     };
 
@@ -420,9 +420,9 @@ namespace Noise
     {
     public:
 
-        Terrace4D( Module4D&      source,
-                   Vector<real_t> controlPoints,
-                   bool           invert = false ) :
+        Terrace4D( Module4D&             source,
+                   Noise::Vector<real_t> controlPoints,
+                   bool                  invert = false ) :
             source( source ),
             controlPoints( controlPoints ),
             invert( invert )
@@ -434,8 +434,8 @@ namespace Noise
 
     private:
 
-        Module4D&      source;
-        Vector<real_t> controlPoints;
-        bool           invert;
+        Module4D&             source;
+        Noise::Vector<real_t> controlPoints;
+        bool                  invert;
     };
 }

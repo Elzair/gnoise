@@ -30,21 +30,21 @@ namespace Noise
         // This function normalizes a 64-bit unsigned integer between 0.0 and 1.0.
         real_t U64ToNormReal( uint64_t x );
 
+        uint64_t I64ToU64( int64_t x );
+
         uint64_t RealToU64( real_t x );
 
         uint64_t NormRealToU64( real_t x );
 
         real_t Lerp( real_t t, real_t a, real_t b );
 
-        void InsertionSort( Vector<real_t>& vec );
+        void InsertionSort( Noise::Vector<real_t>& vec );
 
         void InsertAndSort( real_t* arr, std::size_t n, real_t val );
 
         int64_t Wrap( int64_t val, int64_t low, int64_t high );
 
         uint64_t Factorial( uint64_t x );
-
-        uint64_t I64ToU64( int64_t x );
 
         namespace Interpolation
         {
