@@ -8,11 +8,26 @@
 
 namespace Noise
 { 
-    /*
-     * Worley Module Methods
-     */
-    
     real_t Worley1D::getValue( real_t x ) const
+    {
+        auto distances = this->getValueHelper( x );
+        
+        // Return the distance to the closest feature point.
+        return distances[0];
+    }
+
+    real_t Worley1D::getCustomValue(
+        real_t                                                                x,
+        std::function<real_t( std::array<real_t, Worley1D::DISTANCES_SIZE> )> fn
+    )
+    {
+        auto distances = this->getValueHelper( x );
+
+        return fn( distances );
+    }
+
+    std::array<real_t, Worley1D::DISTANCES_SIZE>
+    Worley1D::getValueHelper( real_t x ) const
     {
         std::array<real_t, Worley1D::DISTANCES_SIZE> distances;
 
@@ -59,9 +74,8 @@ namespace Noise
                 Util::InsertAndSort( distances.data(), Worley1D::DISTANCES_SIZE, dist );
             }
         }
-        
-        // Return the distance to the closest feature point.
-        return distances[0];
+
+        return distances;
     }
 
     std::size_t Worley1D::lookupNumFeaturePoints( uint64_t num ) const

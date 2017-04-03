@@ -6,6 +6,7 @@
 #include <cmath>
 
 #include <array>
+#include <functional>
 
 #include "module.h"
 #include "util.h"
@@ -15,6 +16,8 @@ namespace Noise
     class Worley1D : public Module1D
     {
     public:
+
+        static const std::size_t DISTANCES_SIZE = 4;
 
         Worley1D( uint64_t seed           = 0,
                   real_t   avgPerCell     = 2.0,
@@ -42,16 +45,22 @@ namespace Noise
         
         virtual real_t getValue( real_t x ) const override;
 
+        real_t getCustomValue(
+            real_t                                                        x,
+            std::function<real_t( std::array<real_t,
+                                             Worley1D::DISTANCES_SIZE> )> fn );
+
     private:
 
-        static const std::size_t MAX_PER_CELL   = 9;
-        static const std::size_t DISTANCES_SIZE = 4;
+        static const std::size_t MAX_PER_CELL = 9;
 
         uint64_t seed;
         real_t   avgPerCell;
         Distance distCalcMethod;
 
         std::array<uint64_t, Worley1D::MAX_PER_CELL> probTable;
+
+        std::array<real_t, Worley1D::DISTANCES_SIZE> getValueHelper( real_t x ) const;
 
         std::size_t lookupNumFeaturePoints( uint64_t num ) const;
     };
