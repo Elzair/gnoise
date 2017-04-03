@@ -21,7 +21,7 @@ namespace Noise
             interpMethod( interpMethod )
         {}
         
-        virtual real_t getValue( real_t x, real_t y )                     const override;
+        virtual real_t getValue( real_t x, real_t y ) const override;
 
     private:
 
@@ -42,7 +42,7 @@ namespace Noise
             interpMethod( interpMethod )
         {}
         
-        virtual real_t getValue( real_t x, real_t y, real_t z )           const override;
+        virtual real_t getValue( real_t x, real_t y, real_t z ) const override;
 
     private:
 

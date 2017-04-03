@@ -8,7 +8,7 @@ namespace Noise
     real_t Value1D::getValue( real_t x ) const
     {
         auto xf = std::floor( x );
-        auto xi = Util::MakeRealU64Range( xf );
+        auto xi = Util::RealToU64( xf );
         
         auto tx = x - xf;
 
@@ -46,7 +46,7 @@ namespace Noise
 
         auto ival = ( n * ( n * n * prime1 + prime2 ) + prime3 ) & mask;
 
-        auto res = Util::NormalizeU64( ival );
+        auto res = Util::U64ToReal( ival );
 
         return res;
     }
@@ -54,9 +54,9 @@ namespace Noise
     real_t Value2D::getValue( real_t x, real_t y ) const
     {
         auto xf = std::floor( x );
-        auto xi = Util::MakeRealU64Range( xf );
+        auto xi = Util::RealToU64( xf );
         auto yf = std::floor( y );
-        auto yi = Util::MakeRealU64Range( yf );
+        auto yi = Util::RealToU64( yf );
 
         auto tx = x - xf;
         auto ty = y - yf;
@@ -102,7 +102,7 @@ namespace Noise
 
         auto ival = ( n * ( n * n * prime1 + prime2 ) + prime3 ) & mask;
 
-        auto res = Util::NormalizeU64( ival );
+        auto res = Util::U64ToReal( ival );
 
         return res;
     }
@@ -110,11 +110,11 @@ namespace Noise
     real_t Value3D::getValue( real_t x, real_t y, real_t z ) const
     {
         auto xf = std::floor( x );
-        auto xi = Util::MakeRealU64Range( xf );
+        auto xi = Util::RealToU64( xf );
         auto yf = std::floor( y );
-        auto yi = Util::MakeRealU64Range( yf );
+        auto yi = Util::RealToU64( yf );
         auto zf = std::floor( z );
-        auto zi = Util::MakeRealU64Range( zf );
+        auto zi = Util::RealToU64( zf );
 
         auto tx = x - xf;
         auto ty = y - yf;
@@ -172,7 +172,7 @@ namespace Noise
 
         auto ival = ( n * ( n * n * prime1 + prime2 ) + prime3 ) & mask;
 
-        auto res = Util::NormalizeU64( ival );
+        auto res = Util::U64ToReal( ival );
 
         return res;
     }
@@ -180,13 +180,13 @@ namespace Noise
     real_t Value4D::getValue( real_t x, real_t y, real_t z, real_t w ) const
     {
         auto xf = std::floor( x );
-        auto xi = Util::MakeRealU64Range( xf );
+        auto xi = Util::RealToU64( xf );
         auto yf = std::floor( y );
-        auto yi = Util::MakeRealU64Range( yf );
+        auto yi = Util::RealToU64( yf );
         auto zf = std::floor( z );
-        auto zi = Util::MakeRealU64Range( zf );
+        auto zi = Util::RealToU64( zf );
         auto wf = std::floor( w );
-        auto wi = Util::MakeRealU64Range( wf );
+        auto wi = Util::RealToU64( wf );
 
         auto tx = x - xf;
         auto ty = y - yf;
@@ -264,7 +264,7 @@ namespace Noise
 
         auto ival = ( n * ( n * n * prime1 + prime2 ) + prime3 ) & mask;
 
-        auto res = Util::NormalizeU64( ival );
+        auto res = Util::U64ToReal( ival );
 
         return res;
     }
